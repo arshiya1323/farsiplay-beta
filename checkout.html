@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تسویه حساب | فارسی‌پلی (بتا)</title>
+<meta name="description" content="خرید و دانلود فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی، فونت خوانا و نصب آسان.">
+<meta name="theme-color" content="#0a0c16">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/theme-init.js"></script>
+</head>
+<body data-page="checkout">
+<div id="header-slot"></div>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <nav class="crumbs" aria-label="مسیر"><a href="index.html">خانه</a><span aria-hidden="true">/</span><span>تسویه حساب</span></nav>
+      <h1>تسویه حساب</h1>
+      <p>اطلاعاتت را وارد کن تا لینک دانلود برایت ارسال شود.</p>
+    </div>
+  </section>
+  <section class="container" id="checkoutRoot">
+    <div class="notice reveal" style="margin-bottom:22px" role="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg>
+      <div><b>نسخه بتا: پرداخت هنوز فعال نیست.</b> با ثبت سفارش هیچ مبلغی کسر نمی‌شود و این مرحله فقط برای آزمایش ظاهر سایت است.</div>
+    </div>
+    <div class="checkout-layout">
+      <div class="panel reveal" id="formPanel">
+        <h2>اطلاعات خریدار</h2>
+        <form class="form" id="checkoutForm" novalidate>
+          <div class="form-row"><label for="cName">نام و نام خانوادگی <span aria-hidden="true">*</span></label><input class="input" id="cName" name="name" autocomplete="name" required aria-describedby="cNameErr"><span class="err" id="cNameErr">لطفاً نام کامل (حداقل ۳ حرف) را وارد کنید.</span></div>
+          <div class="form-row"><label for="cEmail">ایمیل <span aria-hidden="true">*</span></label><input class="input ltr-input" id="cEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="cEmailHint cEmailErr"><span class="hint" id="cEmailHint">لینک دانلود به این ایمیل ارسال می‌شود.</span><span class="err" id="cEmailErr">ایمیل معتبر وارد کنید؛ مثلاً <bdi dir="ltr">name@gmail.com</bdi></span></div>
+          <div class="form-row"><label for="cPhone">شماره موبایل <span aria-hidden="true">*</span></label><input class="input ltr-input" id="cPhone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" placeholder="09123456789" required aria-describedby="cPhoneErr"><span class="err" id="cPhoneErr">شماره موبایل باید ۱۱ رقم و با ۰۹ شروع شود.</span></div>
+          <div class="form-row"><label for="cNote">توضیحات (اختیاری)</label><textarea class="input" id="cNote" name="note" rows="3" placeholder="مثلاً نسخه‌ی بازی شما"></textarea></div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" id="payBtn">ثبت سفارش آزمایشی</button>
+        </form>
+      </div>
+      <aside class="panel reveal" style="--d:.1s" aria-labelledby="sumTitle">
+        <h2 id="sumTitle">خلاصه‌ی سفارش</h2>
+        <div id="summary"></div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<div id="footer-slot"></div>
+<script src="data/products.js"></script>
+<script src="js/common.js"></script>
+<script src="js/checkout.js"></script>
+</body>
+</html>
