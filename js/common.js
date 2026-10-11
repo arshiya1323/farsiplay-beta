@@ -1,4 +1,4 @@
-/* FarsiPlay beta — shared code (header, footer, cart, theme, auth modal, animations) */
+/* PersiaPlay beta — shared code (header, footer, cart, theme, auth modal, animations) */
 (function () {
   'use strict';
   var FP = (window.FP = window.FP || {});
@@ -270,7 +270,7 @@
   function buildLayout() {
     var header = '<a class="skip-link" href="#main">پرش به محتوا</a>' +
       '<header class="site-header" id="siteHeader"><div class="container header-inner">' +
-      '<a class="logo" href="index.html" aria-label="فارسی‌پلی، صفحه اصلی"><span class="logo-mark" aria-hidden="true">ف</span><span>فارسی‌پلی<small>فارسی‌ساز بازی‌های کامپیوتر</small></span><span class="beta-tag">بتا</span></a>' +
+      '<a class="logo" href="index.html" aria-label="پرشیاپلی، صفحه اصلی"><span class="logo-mark" aria-hidden="true">پ</span><span>پرشیاپلی<small>فارسی‌ساز بازی‌های کامپیوتر</small></span><span class="beta-tag">بتا</span></a>' +
       '<nav class="main-nav" id="mainNav" aria-label="منوی اصلی">' + navLink('index.html', 'خانه', 'home') + navLink('catalog.html', 'فروشگاه', 'catalog') +
       navLink('about.html', 'درباره ما', 'about') + navLink('about.html#contact', 'تماس با ما', 'contact') + '</nav>' +
       '<div class="header-actions">' +
@@ -280,13 +280,13 @@
       '<button class="icon-btn menu-toggle" id="menuBtn" type="button" aria-label="باز کردن منو" aria-expanded="false" aria-controls="mainNav">' + I.menu + '</button>' +
       '</div></div></header>';
     var footer = '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
-      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">ف</span><span>فارسی‌پلی</span></a><p>فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ ترجمه‌ی دقیق، فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p>' +
+      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">پ</span><span>پرشیاپلی</span></a><p>فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ ترجمه‌ی دقیق، فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p>' +
       '<div class="socials"><a class="icon-btn" href="#" aria-label="تلگرام (به‌زودی)">' + I.send + '</a><a class="icon-btn" href="#" aria-label="اینستاگرام (به‌زودی)">' + I.heart + '</a><a class="icon-btn" href="#" aria-label="دیسکورد (به‌زودی)">' + I.chat + '</a></div></div>' +
       '<div><h4>دسترسی سریع</h4><ul><li><a href="index.html">خانه</a></li><li><a href="catalog.html">همه‌ی فارسی‌سازها</a></li><li><a href="catalog.html?sort=new">جدیدترین‌ها</a></li><li><a href="catalog.html?sort=best">پرفروش‌ترین‌ها</a></li></ul></div>' +
       '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی خرید</a></li><li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li><li><a href="checkout.html">تسویه حساب</a></li></ul></div>' +
       '<div id="footer-contact"><h4>ارتباط با ما</h4><ul>' +
-      '<li>ایمیل: <bdi dir="ltr">support@example.com</bdi></li><li>تلگرام: <bdi dir="ltr">@farsiplay_support</bdi></li><li>تلفن: <bdi dir="ltr">۰۲۱-۰۰۰۰۰۰۰۰</bdi></li><li>پاسخ‌گویی: شنبه تا پنجشنبه، ۱۰ تا ۱۸</li></ul></div>' +
-      '</div><div class="footer-bottom"><span>© ۱۴۰۵ فارسی‌پلی — همه‌ی حقوق محفوظ است.</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.1</bdi> · اطلاعات تماس فعلاً نمونه هستند</span></div></div></footer>';
+      '<li>ایمیل: <bdi dir="ltr">support@example.com</bdi></li><li>تلگرام: <bdi dir="ltr">@persiaplay_support</bdi></li><li>تلفن: <bdi dir="ltr">۰۲۱-۰۰۰۰۰۰۰۰</bdi></li><li>پاسخ‌گویی: شنبه تا پنجشنبه، ۱۰ تا ۱۸</li></ul></div>' +
+      '</div><div class="footer-bottom"><span>© ۱۴۰۵ پرشیاپلی — همه‌ی حقوق محفوظ است.</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.1</bdi> · اطلاعات تماس فعلاً نمونه هستند</span></div></div></footer>';
     var drawer = '<div class="overlay" id="overlay"></div>' +
       '<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true" inert>' +
       '<div class="drawer-head"><h2 id="drawerTitle">سبد خرید</h2><button class="icon-btn" id="drawerClose" type="button" aria-label="بستن سبد خرید">' + I.close + '</button></div>' +

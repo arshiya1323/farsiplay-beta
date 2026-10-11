@@ -13,7 +13,7 @@
     return;
   }
 
-  document.title = 'فارسی‌ساز ' + p.title_fa + ' | فارسی‌پلی (بتا)';
+  document.title = 'فارسی‌ساز ' + p.title_fa + ' | پرشیاپلی (بتا)';
   FP.$('#crumbTitle').textContent = p.title_fa;
   var fin = FP.finalPrice(p), free = FP.isFree(p), shots = p.screenshots || [];
   var tags = FP.genreTags(p).map(function (g) { return '<a class="chip" style="padding:4px 12px;font-size:.85rem" href="catalog.html?genre=' + encodeURIComponent(g) + '">' + FP.esc(g) + '</a>'; }).join('');
