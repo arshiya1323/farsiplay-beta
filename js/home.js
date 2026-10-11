@@ -31,12 +31,25 @@
 
   // product sections
   var best = P.filter(function (p) { return p.is_bestseller; }).sort(function (a, b) { return b.rating - a.rating; }).slice(0, 4);
-  var news = P.filter(function (p) { return p.is_new; }).slice(0, 4);
+  var news = P.filter(function (p) { return p.is_new; }).sort(function (a, b) { return (FP.isFree(b) - FP.isFree(a)) || (b._order - a._order); }).slice(0, 4);
   if (news.length < 4) news = news.concat(P.slice().reverse().filter(function (p) { return news.indexOf(p) < 0; })).slice(0, 4);
   var deals = P.filter(function (p) { return p.discount_percent > 0; }).sort(function (a, b) { return b.discount_percent - a.discount_percent; }).slice(0, 4);
   FP.renderGrid(FP.$('#bestGrid'), best, { sk: 4 });
   FP.renderGrid(FP.$('#newGrid'), news, { sk: 4, delay: 550 });
   FP.renderGrid(FP.$('#dealGrid'), deals, { sk: 4, delay: 650 });
+
+  // free strip
+  var frees = P.filter(FP.isFree), fs = FP.$('#freeStrip');
+  if (fs && frees.length) {
+    FP.$('#freeList').innerHTML = frees.slice(0, 3).map(function (p, i) {
+      return '<a class="free-item reveal" style="--d:' + i * 0.08 + 's;--glow:' + FP.accent(p) + '" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
+        '<span class="fi-thumb">' + FP.cover(p, { uid: 'f' + i }) + '</span>' +
+        '<span class="fi-body"><span class="fi-title">' + FP.esc(p.title_fa) + ' <span class="tag free">رایگان</span></span>' +
+        '<span class="fi-sub">' + FP.en(p.title_en) + '</span>' +
+        '<span class="fi-cta">' + I.download + (p.download_url ? 'دانلود رایگان' : 'دانلود رایگان، به‌زودی') + '</span></span></a>';
+    }).join('');
+    fs.hidden = false;
+  }
 
   // genre tiles
   var colors = ['#7c5cff', '#22d3ee', '#f472b6', '#34d399', '#fbbf24', '#f87171', '#60a5fa', '#a78bfa'];

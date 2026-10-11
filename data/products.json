@@ -257,5 +257,51 @@
     "is_new": false,
     "is_bestseller": false,
     "accent": "#e07a2f"
+  },
+  {
+    "id": "gta-v-enhanced",
+    "title_fa": "جی‌تی‌ای ۵",
+    "title_en": "Grand Theft Auto V Enhanced",
+    "genre_fa": "اکشن، جهان باز",
+    "platform": "PC (Enhanced)",
+    "version": "1.0-beta",
+    "size_mb": 9.7,
+    "is_free": true,
+    "download_url": null,
+    "price_toman": 0,
+    "discount_percent": 0,
+    "rating": null,
+    "is_new": true,
+    "is_bestseller": false,
+    "features_fa": [
+      "ترجمه‌ی بخش داستانی: زیرنویس‌ها، مأموریت‌ها، منوها، پیامک‌ها و سایت‌های داخل بازی",
+      "فونت فارسی اختصاصی بر پایه‌ی Vazirmatn با حروف چسبیده و راست‌چین",
+      "نصاب فارسی با تشخیص خودکار پوشه‌ی بازی، آپدیت و حذف کامل با یک دکمه",
+      "فایل‌های اصلی بازی دست نمی‌خورن (نصب از طریق پوشه‌ی mods)"
+    ],
+    "description_fa": "فارسی‌ساز رایگان بخش داستانی GTA V Enhanced، با حدود ۱۰۰ هزار خط ترجمه به فارسی محاوره‌ای. ترجمه با کمک هوش مصنوعی انجام شده و بازبینی خودکار شده، پس ممکنه جاهایی اشتباه داشته باشه. نصاب موقع نصب با نسخه‌ی بازی شما تطبیق داده میشه و خط‌هایی که با آپدیت‌ها عوض شدن انگلیسی می‌مونن.",
+    "install_steps_fa": [
+      "بازی رو ببندید.",
+      "FarsiSaz_GTA5.exe رو اجرا کنید (اگه ویندوز هشدار SmartScreen داد: More info و بعد Run anyway).",
+      "پوشه‌ی بازی رو تأیید کنید و دکمه‌ی نصب رو بزنید (حدود ۷.۵ گیگ فضای موقت لازمه).",
+      "بازی رو با BattlEye خاموش و فقط در حالت داستانی اجرا کنید؛ زبان بازی روی English بمونه.",
+      "برای حذف، دوباره نصاب رو اجرا کنید و دکمه‌ی حذف رو بزنید."
+    ],
+    "game_version_fa": "تست‌شده روی GTA V Enhanced نسخه‌ی 1.0.889.22",
+    "credits_fa": "ترجمه با DeepSeek و بازبینی خودکار؛ فونت Vazirmatn (مجوز OFL)؛ OpenRPF از Transmet؛ ابزار آرشیو rage-cli",
+    "credits_links": {
+      "OpenRPF": "https://www.gta5-mods.com/tools/openrpf-openiv-asi-for-gta-v-enhanced",
+      "rage-cli": "https://github.com/VIRUXE/rage-cli",
+      "Vazirmatn": "https://github.com/rastikerdar/vazirmatn"
+    },
+    "warning_fa": "فقط حالت داستانی. با این ماد وارد GTA Online نشید، چون ممکنه بن بشید.",
+    "accent": "#7CB342",
+    "screenshots": [
+      "assets/shots/gta-v-enhanced/main_menu.webp",
+      "assets/shots/gta-v-enhanced/prologue_hostages.webp",
+      "assets/shots/gta-v-enhanced/prologue_guard.webp",
+      "assets/shots/gta-v-enhanced/menu_controls.webp",
+      "assets/shots/gta-v-enhanced/menu_graphics.webp"
+    ]
   }
 ]

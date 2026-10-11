@@ -23,6 +23,23 @@
     });
   };
   FP.en = function (s) { return '<bdi class="en" dir="ltr">' + FP.esc(s) + '</bdi>'; };
+  /* Escape text and wrap Latin runs (titles, file names, versions) in LTR bdi so RTL lines don't scramble.
+     links: optional { "Name": "https://..." } — a run equal to a key becomes an external link. */
+  FP.autoLtr = function (text, links) {
+    links = links || {};
+    var re = /[A-Za-z0-9][A-Za-z0-9_.+\-\/:]*(?:[ ]+[A-Za-z0-9][A-Za-z0-9_.+\-\/:]*)*/g, out = '', last = 0, m;
+    text = String(text == null ? '' : text);
+    while ((m = re.exec(text))) {
+      var run = m[0], tail = (run.match(/[.:\-\/]+$/) || [''])[0];
+      run = run.slice(0, run.length - tail.length);
+      out += FP.esc(text.slice(last, m.index));
+      var inner = FP.esc(run), href = Object.prototype.hasOwnProperty.call(links, run) ? links[run] : null;
+      if (href && /^https:\/\//.test(href)) inner = '<a class="ext-link" href="' + FP.esc(href) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>';
+      out += '<bdi class="en" dir="ltr">' + inner + '</bdi>' + FP.esc(tail);
+      last = m.index + m[0].length;
+    }
+    return out + FP.esc(text.slice(last));
+  };
   FP.$ = function (sel, root) { return (root || document).querySelector(sel); };
   FP.$$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
@@ -33,15 +50,19 @@
     p.price_toman = Number(p.price_toman) || 0;
     p.discount_percent = Number(p.discount_percent) || 0;
     p.rating = Number(p.rating) || 0;
+    p.is_free = p.is_free === true;
+    if (p.is_free) { p.price_toman = 0; p.discount_percent = 0; }
+    p.screenshots = Array.isArray(p.screenshots) ? p.screenshots.filter(function (u) { return typeof u === 'string' && /^assets\//.test(u); }) : [];
     p.features_fa = Array.isArray(p.features_fa) ? p.features_fa : [];
     p.title_fa = String(p.title_fa || p.title_en || '').replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
     p._order = i;
   });
   FP.products = products;
+  FP.isFree = function (p) { return !!(p && p.is_free); };
   FP.finalPrice = function (p) { return Math.round(p.price_toman * (100 - p.discount_percent) / 100 / 1000) * 1000; };
   FP.byId = function (id) { id = String(id); for (var i = 0; i < products.length; i++) if (products[i].id === id) return products[i]; return null; };
   FP.genreTags = function (p) { return String(p.genre_fa || '').split(/[،,]/).map(function (s) { return s.trim(); }).filter(Boolean); };
-  FP.size = function (mb) { mb = Number(mb) || 0; return mb >= 1024 ? FP.fa((mb / 1024).toFixed(1).replace(/\.0$/, '')) + ' گیگابایت' : FP.fa(Math.round(mb)) + ' مگابایت'; };
+  FP.size = function (mb) { mb = Number(mb) || 0; return mb >= 1024 ? FP.fa((mb / 1024).toFixed(1).replace(/\.0$/, '')).replace('.', '٫') + ' گیگابایت' : mb < 100 ? FP.fa(mb.toFixed(1).replace(/\.0$/, '')).replace('.', '٫') + ' مگابایت' : FP.fa(Math.round(mb)) + ' مگابایت'; };
   FP.genres = function () {
     var m = {};
     products.forEach(function (p) { FP.genreTags(p).forEach(function (g) { m[g] = (m[g] || 0) + 1; }); });
@@ -97,6 +118,9 @@
   }
   FP.cover = function (p, opts) {
     opts = opts || {};
+    if (p.screenshots && p.screenshots.length && !opts.svg) {
+      return '<div class="cover cover-img"><img src="' + FP.esc(p.screenshots[0]) + '" alt="' + FP.esc('تصویر فارسی‌شده‌ی ' + (p.title_fa || p.title_en)) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"></div>';
+    }
     var c = FP.accent(p), dark = shade(c, -120), mid = shade(c, -40), light = shade(c, 70);
     var h = hash(p.id + (p.title_en || '')), uid = 'g' + h.toString(36) + (opts.uid || '');
     var pattern = h % 4, title = p.title_en || p.title_fa || '';
@@ -126,6 +150,7 @@
 
   /* ---------- Product card ---------- */
   FP.priceHTML = function (p) {
+    if (FP.isFree(p)) return '<div class="price"><span class="old" style="visibility:hidden">-</span><span class="now free-price">رایگان</span></div>';
     var fin = FP.finalPrice(p);
     return '<div class="price">' + (p.discount_percent > 0 ? '<span class="old">' + FP.num(p.price_toman) + '</span>' : '<span class="old" style="visibility:hidden">-</span>') +
       '<span class="now">' + FP.num(fin) + '<small>تومان</small></span></div>';
@@ -133,6 +158,7 @@
   FP.card = function (p, i) {
     var tags = '';
     if (p.discount_percent > 0) tags += '<span class="tag off">' + FP.fa(p.discount_percent) + '٪ تخفیف</span>';
+    if (FP.isFree(p)) tags += '<span class="tag free">رایگان</span>';
     if (p.is_new) tags += '<span class="tag new">جدید</span>';
     if (p.is_bestseller) tags += '<span class="tag best">پرفروش</span>';
     var url = 'product.html?id=' + encodeURIComponent(p.id);
@@ -142,7 +168,9 @@
       '<div class="card-sub">' + FP.en(p.title_en) + '</div>' +
       '<div class="card-sub"><span>' + FP.esc(FP.genreTags(p)[0] || '') + '</span>' + (p.rating ? '<span class="rating">' + I.star + FP.fa(p.rating.toFixed(1)) + '</span>' : '') + '</div>' +
       '<div class="card-foot">' + FP.priceHTML(p) +
-      '<button class="add-btn" type="button" data-add="' + FP.esc(p.id) + '" aria-label="' + FP.esc('افزودن ' + p.title_fa + ' به سبد خرید') + '">' + I.plus + '</button></div></div></article>';
+      (FP.isFree(p)
+        ? '<a class="add-btn free-btn" href="' + url + '" aria-label="' + FP.esc('دانلود رایگان ' + p.title_fa) + '" title="دانلود رایگان">' + I.download + '</a>'
+        : '<button class="add-btn" type="button" data-add="' + FP.esc(p.id) + '" aria-label="' + FP.esc('افزودن ' + p.title_fa + ' به سبد خرید') + '">' + I.plus + '</button>') + '</div></div></article>';
   };
   FP.skeletons = function (n) {
     var s = '';
@@ -163,7 +191,7 @@
 
   /* ---------- Cart (localStorage) ---------- */
   var CART_KEY = 'farsiplay_cart_v1';
-  function readCart() { try { var c = JSON.parse(localStorage.getItem(CART_KEY) || '[]'); return Array.isArray(c) ? c.filter(function (x) { return FP.byId(x.id); }) : []; } catch (e) { return []; } }
+  function readCart() { try { var c = JSON.parse(localStorage.getItem(CART_KEY) || '[]'); return Array.isArray(c) ? c.filter(function (x) { var p = FP.byId(x.id); return p && !FP.isFree(p); }) : []; } catch (e) { return []; } }
   function writeCart(c) { try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (e) { } }
   var cart = readCart();
   FP.cart = {
@@ -172,7 +200,7 @@
     total: function () { return cart.reduce(function (s, x) { var p = FP.byId(x.id); return s + (p ? FP.finalPrice(p) * x.qty : 0); }, 0); },
     rawTotal: function () { return cart.reduce(function (s, x) { var p = FP.byId(x.id); return s + (p ? p.price_toman * x.qty : 0); }, 0); },
     add: function (id, qty) {
-      id = String(id); var it = cart.filter(function (x) { return x.id === id; })[0];
+      id = String(id); if (FP.isFree(FP.byId(id))) return; var it = cart.filter(function (x) { return x.id === id; })[0];
       if (it) it.qty = Math.min(9, it.qty + (qty || 1)); else cart.push({ id: id, qty: qty || 1 });
       writeCart(cart); FP.updateCartUI(true);
     },
@@ -368,7 +396,7 @@
     document.addEventListener('click', function (e) {
       var b = e.target.closest('[data-add]'); if (!b) return;
       e.preventDefault();
-      var p = FP.byId(b.getAttribute('data-add')); if (!p) return;
+      var p = FP.byId(b.getAttribute('data-add')); if (!p || FP.isFree(p)) return;
       FP.cart.add(p.id, 1);
       FP.toast('«' + FP.esc(p.title_fa) + '» به سبد خرید اضافه شد');
       if (b.classList.contains('add-btn')) { b.classList.add('added'); b.innerHTML = I.check; setTimeout(function () { b.classList.remove('added'); b.innerHTML = I.plus; }, 1400); }
