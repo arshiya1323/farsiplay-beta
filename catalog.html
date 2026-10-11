@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>فروشگاه فارسی‌سازها | پرشیاپلی (بتا)</title>
-<meta name="description" content="خرید و دانلود فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی، فونت خوانا و نصب آسان.">
+<meta name="description" content="دانلود فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی، فونت خوانا و نصب آسان.">
 <meta name="theme-color" content="#0a0c16">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/fonts.css">
@@ -19,7 +19,7 @@
     <div class="container">
       <nav class="crumbs" aria-label="مسیر"><a href="index.html">خانه</a><span aria-hidden="true">/</span><span>فروشگاه</span></nav>
       <h1 class="reveal">همه‌ی فارسی‌سازها</h1>
-      <p class="reveal" style="--d:.08s">جستجو کن، سبک را انتخاب کن و بر اساس قیمت یا محبوبیت مرتب کن.</p>
+      <p class="reveal" style="--d:.08s">جستجو کن یا سبک بازی را انتخاب کن.</p>
     </div>
   </section>
   <section class="container" aria-label="فهرست محصولات">
@@ -29,7 +29,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input class="input" id="q" type="search" placeholder="جستجوی نام بازی… فارسی یا انگلیسی" autocomplete="off">
       </div>
-      <div class="sort-wrap">
+      <div class="sort-wrap" id="sortWrap">
         <label for="sort">مرتب‌سازی:</label>
         <select class="select" id="sort">
           <option value="new">جدیدترین</option>
@@ -42,6 +42,7 @@
     <div class="chips" id="genreChips" role="group" aria-label="فیلتر سبک"></div>
     <div class="result-meta"><span id="resultCount" aria-live="polite"></span><button class="btn btn-ghost btn-sm" type="button" id="resetBtn" hidden>پاک کردن فیلترها</button></div>
     <div class="grid" id="catalogGrid"></div>
+    <p class="soon-note-box reveal"><b>فارسی‌سازهای بیشتر به‌زودی</b> — بازی‌های دیگر در حال ترجمه‌اند.</p>
   </section>
 </main>
 

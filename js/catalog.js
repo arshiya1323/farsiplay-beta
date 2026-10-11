@@ -7,6 +7,8 @@
   if (['new', 'best', 'cheap', 'expensive'].indexOf(state.sort) < 0) state.sort = 'new';
 
   var qEl = FP.$('#q'), sortEl = FP.$('#sort'), chipsEl = FP.$('#genreChips'), grid = FP.$('#catalogGrid');
+  // price/popularity sorting only makes sense with paid products
+  if (!FP.hasPaid) { FP.$('#sortWrap').hidden = true; state.sort = 'new'; FP.$('.toolbar').classList.add('no-sort'); }
   qEl.value = state.q; sortEl.value = state.sort;
 
   function norm(s) {

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>پرشیاپلی | فروشگاه فارسی‌ساز بازی‌های کامپیوتر (بتا)</title>
-<meta name="description" content="خرید و دانلود فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی، فونت خوانا و نصب آسان.">
+<meta name="description" content="دانلود فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی، فونت خوانا و نصب آسان.">
 <meta name="theme-color" content="#0a0c16">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/fonts.css">
@@ -24,90 +24,45 @@
     </div>
     <div class="container hero-inner">
       <div>
-        <span class="eyebrow reveal"><span class="dot"></span>نسخه‌ی بتا آنلاین شد</span>
+        <span class="eyebrow reveal"><span class="dot"></span>فارسی‌ساز رایگان <bdi dir="ltr">GTA V</bdi> اضافه شد</span>
         <h1 id="heroTitle" class="reveal" style="--d:.08s">بازی‌های محبوبت را<br><span class="grad-text">به زبان فارسی</span> تجربه کن</h1>
-        <p class="lead reveal" style="--d:.16s">فارسی‌سازهای دقیق و روان برای بازی‌های کامپیوتر؛ زیرنویس و منوی کامل، فونت خوانا و نصب در چند ثانیه. داستان را همان‌طور که سازنده خواسته بفهم.</p>
-        <div class="hero-cta reveal" style="--d:.24s">
+        <p class="lead reveal" style="--d:.16s" id="heroLead">فارسی‌سازهای بازی‌های کامپیوتر با زیرنویس و منوی فارسی، فونت خوانا و نصاب ساده. داستان را همان‌طور که سازنده خواسته بفهم.</p>
+        <div class="hero-cta reveal" style="--d:.24s" id="heroCta">
           <a class="btn btn-primary btn-lg" href="catalog.html">مشاهده‌ی فارسی‌سازها <span aria-hidden="true">←</span></a>
-          <a class="btn btn-ghost btn-lg" href="#how">چطور کار می‌کند؟</a>
+          <a class="btn btn-ghost btn-lg" href="#how">چطور نصب کنم؟</a>
         </div>
-        <form class="hero-search reveal" style="--d:.32s" action="catalog.html" role="search">
-          <label class="sr-only" for="heroQ">جستجوی بازی</label>
-          <input id="heroQ" name="q" type="search" placeholder="نام بازی را بنویس… فارسی یا انگلیسی">
-          <button class="btn btn-primary btn-sm" type="submit">جستجو</button>
-        </form>
       </div>
-      <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+      <div class="hero-visual hero-shots" id="heroVisual" aria-hidden="true"></div>
     </div>
   </section>
 
-  <!-- STATS -->
-  <section class="stats" aria-label="آمار">
+  <!-- AT A GLANCE (truthful, computed from data) -->
+  <section class="stats" aria-label="پرشیاپلی در یک نگاه">
     <div class="container">
       <div class="stats-grid reveal">
         <div class="stat"><div class="num" data-count-to="0" id="statProducts">۰</div><div class="lbl">فارسی‌ساز آماده</div></div>
-        <div class="stat"><div class="num" data-count-to="12500" data-suffix="+">۰</div><div class="lbl">گیمر راضی</div></div>
-        <div class="stat"><div class="num" data-count-to="480000" data-suffix="+">۰</div><div class="lbl">خط ترجمه‌شده</div></div>
-        <div class="stat"><div class="num" data-count-to="98" data-suffix="٪">۰</div><div class="lbl">رضایت از نصب</div></div>
+        <div class="stat" id="statFreeBox"><div class="num" id="statFree">۰</div><div class="lbl" id="statFreeLbl">فارسی‌ساز رایگان</div></div>
+        <div class="stat stat-claim"><div class="ic" id="statIc1"></div><div class="lbl"><b>نصب با یک کلیک</b>نصاب خودکار فارسی</div></div>
+        <div class="stat stat-claim"><div class="ic" id="statIc2"></div><div class="lbl"><b>بدون آسیب به فایل بازی</b>حذف کامل با یک دکمه</div></div>
       </div>
     </div>
   </section>
 
-  <!-- FREE STRIP -->
-  <section class="block free-strip" id="freeStrip" aria-labelledby="freeTitle" hidden>
-    <div class="container">
-      <div class="free-band reveal">
-        <div class="free-head"><h2 id="freeTitle"><span class="bar"></span>فارسی‌سازهای رایگان</h2><p>بدون پرداخت، فقط دانلود و نصب</p><a class="link-more" href="catalog.html?free=1">همه‌ی رایگان‌ها <span aria-hidden="true">←</span></a></div>
-        <div class="free-list" id="freeList"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BESTSELLERS -->
-  <section class="block" aria-labelledby="bestTitle">
+  <!-- FEATURED FREE PATCHES -->
+  <section class="block" id="featured" aria-labelledby="featTitle">
     <div class="container">
       <div class="section-head reveal">
-        <div><h2 id="bestTitle"><span class="bar"></span>پرفروش‌ترین‌ها</h2><p>محبوب‌ترین فارسی‌سازهای این ماه</p></div>
-        <a class="link-more" href="catalog.html?sort=best">مشاهده‌ی همه <span aria-hidden="true">←</span></a>
+        <div><h2 id="featTitle"><span class="bar"></span>فارسی‌سازهای رایگان</h2><p>بدون پرداخت؛ دانلود کن و نصب کن</p></div>
+        <a class="link-more" href="catalog.html?free=1">همه‌ی رایگان‌ها <span aria-hidden="true">←</span></a>
       </div>
-      <div class="grid" id="bestGrid"></div>
-    </div>
-  </section>
-
-  <!-- GENRES -->
-  <section class="block" aria-labelledby="genreTitle" style="padding-top:0">
-    <div class="container">
-      <div class="section-head reveal"><div><h2 id="genreTitle"><span class="bar"></span>بر اساس سبک</h2><p>سبک مورد علاقه‌ات را انتخاب کن</p></div></div>
-      <div class="genre-tiles" id="genreTiles"></div>
-    </div>
-  </section>
-
-  <!-- NEW -->
-  <section class="block" aria-labelledby="newTitle" style="padding-top:0">
-    <div class="container">
-      <div class="section-head reveal">
-        <div><h2 id="newTitle"><span class="bar"></span>تازه‌ها</h2><p>جدیدترین فارسی‌سازهای منتشرشده</p></div>
-        <a class="link-more" href="catalog.html?sort=new">مشاهده‌ی همه <span aria-hidden="true">←</span></a>
-      </div>
-      <div class="grid" id="newGrid"></div>
-    </div>
-  </section>
-
-  <!-- DEALS -->
-  <section class="block" aria-labelledby="dealTitle" style="padding-top:0">
-    <div class="container">
-      <div class="section-head reveal">
-        <div><h2 id="dealTitle"><span class="bar"></span>تخفیف‌های ویژه</h2><p>بیشترین تخفیف‌ها، فقط برای مدت محدود</p></div>
-        <a class="link-more" href="catalog.html?sort=cheap">مشاهده‌ی همه <span aria-hidden="true">←</span></a>
-      </div>
-      <div class="grid" id="dealGrid"></div>
+      <div class="featured-list" id="featureList"></div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="block" id="how" aria-labelledby="howTitle">
+  <section class="block" id="how" aria-labelledby="howTitle" style="padding-top:0">
     <div class="container">
-      <div class="section-head reveal" style="justify-content:center;text-align:center"><div><h2 id="howTitle" style="justify-content:center">در سه قدم، بازی‌ات فارسی می‌شود</h2><p>ساده، سریع و بدون دردسر</p></div></div>
+      <div class="section-head reveal" style="justify-content:center;text-align:center"><div><h2 id="howTitle" style="justify-content:center">در سه قدم، بازی‌ات فارسی می‌شود</h2><p>ساده و بدون دردسر</p></div></div>
       <div class="steps" id="steps"></div>
     </div>
   </section>
@@ -115,17 +70,17 @@
   <!-- FAQ -->
   <section class="block" id="faq" aria-labelledby="faqTitle" style="padding-top:0">
     <div class="container">
-      <div class="section-head reveal" style="justify-content:center;text-align:center"><div><h2 id="faqTitle" style="justify-content:center">سوالات متداول</h2><p>جواب سوال‌هایی که زیاد پرسیده می‌شوند</p></div></div>
+      <div class="section-head reveal" style="justify-content:center;text-align:center"><div><h2 id="faqTitle" style="justify-content:center">سوالات متداول</h2><p>جواب سوال‌های مهم قبل از نصب</p></div></div>
       <div class="faq" id="faqList"></div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- COMING SOON -->
   <section class="block" style="padding-top:0">
     <div class="container">
-      <div class="cta-band reveal">
-        <div><h2>بازی‌ات در لیست نیست؟</h2><p>درخواست فارسی‌ساز بده؛ بیشترین درخواست‌ها زودتر ترجمه می‌شوند.</p></div>
-        <a class="btn btn-lg" href="about.html#contact">ثبت درخواست</a>
+      <div class="cta-band soon-band reveal">
+        <div><h2>به‌زودی بازی‌های بیشتر</h2><p>فارسی‌سازهای بازی‌های دیگر در حال آماده‌سازی‌اند. به‌زودی امکان درخواست بازی هم اضافه می‌شود.</p></div>
+        <a class="btn btn-lg" href="catalog.html">دیدن فارسی‌سازهای فعلی</a>
       </div>
     </div>
   </section>

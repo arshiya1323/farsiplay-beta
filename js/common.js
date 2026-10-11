@@ -99,53 +99,14 @@
   };
   FP.icon = I;
 
-  /* ---------- Generated cover art (no copyrighted images) ---------- */
-  function hash(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
-  function shade(hex, amt) {
-    hex = hex.replace('#', ''); if (hex.length === 3) hex = hex.replace(/./g, '$&$&');
-    var n = parseInt(hex, 16), r = (n >> 16) + amt, g = ((n >> 8) & 255) + amt, b = (n & 255) + amt;
-    r = Math.max(0, Math.min(255, r)); g = Math.max(0, Math.min(255, g)); b = Math.max(0, Math.min(255, b));
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-  }
-  function wrapTitle(t, max) {
-    var words = String(t).split(/\s+/), lines = [], cur = '';
-    words.forEach(function (w) {
-      if ((cur + ' ' + w).trim().length > max && cur) { lines.push(cur); cur = w; } else cur = (cur + ' ' + w).trim();
-    });
-    if (cur) lines.push(cur);
-    if (lines.length > 3) { lines = lines.slice(0, 3); lines[2] = lines[2].replace(/.{0,2}$/, '…'); }
-    return lines;
-  }
+  /* ---------- Cover ---------- */
   FP.cover = function (p, opts) {
     opts = opts || {};
     if (p.screenshots && p.screenshots.length && !opts.svg) {
       return '<div class="cover cover-img"><img src="' + FP.esc(p.screenshots[0]) + '" alt="' + FP.esc('تصویر فارسی‌شده‌ی ' + (p.title_fa || p.title_en)) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"></div>';
     }
-    var c = FP.accent(p), dark = shade(c, -120), mid = shade(c, -40), light = shade(c, 70);
-    var h = hash(p.id + (p.title_en || '')), uid = 'g' + h.toString(36) + (opts.uid || '');
-    var pattern = h % 4, title = p.title_en || p.title_fa || '';
-    var lines = wrapTitle(title, opts.tall ? 13 : 17);
-    var W = 400, H = opts.tall ? 533 : 300;
-    var fs = lines.length > 2 ? 30 : 36; if (opts.tall) fs += 4;
-    var startY = H - 34 - (lines.length - 1) * (fs + 6);
-    var shapes = '';
-    if (pattern === 0) { for (var i = 0; i < 9; i++) shapes += '<circle cx="' + (300 - i * 8) + '" cy="' + (90 + i * 4) + '" r="' + (30 + i * 22) + '" fill="none" stroke="' + light + '" stroke-opacity="' + (0.22 - i * 0.02) + '" stroke-width="2"/>'; }
-    else if (pattern === 1) { for (var j = -6; j < 14; j++) shapes += '<path d="M' + (j * 40) + ' 0 L' + (j * 40 + 260) + ' ' + H + '" stroke="' + light + '" stroke-opacity=".12" stroke-width="14"/>'; }
-    else if (pattern === 2) { for (var x = 0; x < 11; x++) for (var y = 0; y < 9; y++) shapes += '<circle cx="' + (20 + x * 38) + '" cy="' + (16 + y * 38) + '" r="2.2" fill="' + light + '" fill-opacity="' + (0.12 + ((x + y) % 4) * 0.06) + '"/>'; }
-    else { shapes += '<polygon points="260,30 380,110 350,250 210,270 160,140" fill="' + light + '" fill-opacity=".14"/><polygon points="300,60 360,120 330,200 250,190" fill="none" stroke="' + light + '" stroke-opacity=".4" stroke-width="2"/>'; }
-    var text = lines.map(function (l, k) {
-      return '<text x="24" y="' + (startY + k * (fs + 6)) + '" font-size="' + fs + '" font-weight="900" fill="#fff" font-family="Vazirmatn, Segoe UI, Arial, sans-serif" direction="ltr" text-anchor="start" style="letter-spacing:-.5px">' + FP.esc(l) + '</text>';
-    }).join('');
-    return '<div class="cover" role="img" aria-label="' + FP.esc('کاور ' + (p.title_fa || title)) + '">' +
-      '<svg direction="ltr" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '<defs><linearGradient id="' + uid + 'a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + mid + '"/><stop offset="1" stop-color="' + dark + '"/></linearGradient>' +
-      '<radialGradient id="' + uid + 'b" cx=".8" cy=".15" r=".8"><stop offset="0" stop-color="' + c + '" stop-opacity=".9"/><stop offset="1" stop-color="' + c + '" stop-opacity="0"/></radialGradient>' +
-      '<linearGradient id="' + uid + 'c" x1="0" y1="0" x2="0" y2="1"><stop offset=".35" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".65"/></linearGradient></defs>' +
-      '<rect width="' + W + '" height="' + H + '" fill="url(#' + uid + 'a)"/><rect width="' + W + '" height="' + H + '" fill="url(#' + uid + 'b)"/>' + shapes +
-      '<rect width="' + W + '" height="' + H + '" fill="url(#' + uid + 'c)"/>' +
-      '<rect x="24" y="22" width="58" height="22" rx="11" fill="#fff" fill-opacity=".16"/><text x="53" y="38" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="Vazirmatn, Arial, sans-serif">' + FP.esc((p.platform || 'PC').toString().split(/[\/,]/)[0].trim().slice(0, 8)) + '</text>' +
-      '<text x="' + (W - 24) + '" y="40" font-size="15" font-weight="800" fill="#fff" fill-opacity=".85" text-anchor="end" font-family="Vazirmatn, Tahoma, sans-serif">فارسی</text>' +
-      text + '</svg></div>';
+    /* fallback for a product without screenshots: plain accent gradient + English title */
+    return '<div class="cover cover-fallback" role="img" aria-label="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" style="--glow:' + FP.accent(p) + '">' + FP.en(p.title_en || p.title_fa) + '</div>';
   };
 
   /* ---------- Product card ---------- */
@@ -267,6 +228,8 @@
   /* ---------- Layout (header/footer/drawer/modal) ---------- */
   var page = document.body.getAttribute('data-page') || '';
   function navLink(href, label, key) { return '<a href="' + href + '"' + (page === key ? ' aria-current="page"' : '') + '>' + label + '</a>'; }
+  var hasPaid = products.some(function (p) { return !FP.isFree(p); });
+  FP.hasPaid = hasPaid;
   function buildLayout() {
     var header = '<a class="skip-link" href="#main">پرش به محتوا</a>' +
       '<header class="site-header" id="siteHeader"><div class="container header-inner">' +
@@ -275,18 +238,16 @@
       navLink('about.html', 'درباره ما', 'about') + navLink('about.html#contact', 'تماس با ما', 'contact') + '</nav>' +
       '<div class="header-actions">' +
       '<button class="icon-btn theme-toggle" id="themeBtn" type="button" aria-label="تغییر حالت روشن و تاریک">' + I.moon + I.sun + '</button>' +
-      '<button class="icon-btn" id="loginBtn" type="button" aria-label="ورود یا ثبت‌نام">' + I.user + '</button>' +
-      '<button class="icon-btn" id="cartBtn" type="button" aria-label="سبد خرید" aria-controls="cartDrawer">' + I.cart + '<span class="badge cart-badge" data-count="0">۰</span></button>' +
+      '<button class="icon-btn" id="loginBtn" type="button" aria-label="ورود یا ثبت‌نام"' + (hasPaid ? '' : ' hidden') + '>' + I.user + '</button>' +
+      '<button class="icon-btn" id="cartBtn" type="button" aria-label="سبد خرید" aria-controls="cartDrawer"' + (hasPaid ? '' : ' hidden') + '>' + I.cart + '<span class="badge cart-badge" data-count="0">۰</span></button>' +
       '<button class="icon-btn menu-toggle" id="menuBtn" type="button" aria-label="باز کردن منو" aria-expanded="false" aria-controls="mainNav">' + I.menu + '</button>' +
       '</div></div></header>';
     var footer = '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
-      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">پ</span><span>پرشیاپلی</span></a><p>فارسی‌ساز باکیفیت برای بازی‌های کامپیوتر؛ ترجمه‌ی دقیق، فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p>' +
-      '<div class="socials"><a class="icon-btn" href="#" aria-label="تلگرام (به‌زودی)">' + I.send + '</a><a class="icon-btn" href="#" aria-label="اینستاگرام (به‌زودی)">' + I.heart + '</a><a class="icon-btn" href="#" aria-label="دیسکورد (به‌زودی)">' + I.chat + '</a></div></div>' +
-      '<div><h4>دسترسی سریع</h4><ul><li><a href="index.html">خانه</a></li><li><a href="catalog.html">همه‌ی فارسی‌سازها</a></li><li><a href="catalog.html?sort=new">جدیدترین‌ها</a></li><li><a href="catalog.html?sort=best">پرفروش‌ترین‌ها</a></li></ul></div>' +
-      '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی خرید</a></li><li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li><li><a href="checkout.html">تسویه حساب</a></li></ul></div>' +
-      '<div id="footer-contact"><h4>ارتباط با ما</h4><ul>' +
-      '<li>ایمیل: <bdi dir="ltr">support@example.com</bdi></li><li>تلگرام: <bdi dir="ltr">@persiaplay_support</bdi></li><li>تلفن: <bdi dir="ltr">۰۲۱-۰۰۰۰۰۰۰۰</bdi></li><li>پاسخ‌گویی: شنبه تا پنجشنبه، ۱۰ تا ۱۸</li></ul></div>' +
-      '</div><div class="footer-bottom"><span>© ۱۴۰۵ پرشیاپلی — همه‌ی حقوق محفوظ است.</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.1</bdi> · اطلاعات تماس فعلاً نمونه هستند</span></div></div></footer>';
+      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">پ</span><span>پرشیاپلی</span></a><p>فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی با فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p></div>' +
+      '<div><h4>دسترسی سریع</h4><ul><li><a href="index.html">خانه</a></li><li><a href="catalog.html">همه‌ی فارسی‌سازها</a></li><li><a href="catalog.html?free=1">فارسی‌سازهای رایگان</a></li></ul></div>' +
+      '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی نصب</a></li><li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li></ul></div>' +
+      '<div id="footer-contact"><h4>ارتباط با ما</h4><ul><li>راه‌های ارتباطی به‌زودی اضافه می‌شوند.</li></ul></div>' +
+      '</div><div class="footer-bottom"><span>© ۱۴۰۵ پرشیاپلی</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.2</bdi></span></div></div></footer>';
     var drawer = '<div class="overlay" id="overlay"></div>' +
       '<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true" inert>' +
       '<div class="drawer-head"><h2 id="drawerTitle">سبد خرید</h2><button class="icon-btn" id="drawerClose" type="button" aria-label="بستن سبد خرید">' + I.close + '</button></div>' +

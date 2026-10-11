@@ -3,25 +3,36 @@
   'use strict';
   var FP = window.FP, P = FP.products, I = FP.icon;
 
-  // hero floating covers
-  var heroPicks = P.filter(function (p) { return p.is_bestseller; }).slice(0, 3);
-  if (heroPicks.length < 3) heroPicks = P.slice(0, 3);
-  var hv = FP.$('#heroVisual');
-  hv.innerHTML = heroPicks.map(function (p, i) { return '<div class="hero-card">' + FP.cover(p, { tall: true, uid: 'h' + i }) + '</div>'; }).join('') +
-    '<div class="hero-chip c1"><span class="ic">' + I.bolt + '</span>نصب در کمتر از یک دقیقه</div>' +
-    '<div class="hero-chip c2"><span class="ic">' + I.shield + '</span>بدون آسیب به فایل بازی</div>';
+  // hero: real in-game screenshots of the featured (free) product
+  var feat = P.filter(FP.isFree)[0] || P[0];
+  var hv = FP.$('#heroVisual'), shots = feat && feat.screenshots && feat.screenshots.length ? feat.screenshots.slice(0, 3) : [];
+  if (feat) {
+    FP.$('#heroLead').innerHTML = 'فارسی‌ساز <b>رایگان</b> بخش داستانی ' + FP.en(/GTA|Grand Theft/i.test(feat.title_en || '') ? 'GTA V Enhanced' : feat.title_en) + ' آماده شد: زیرنویس، مأموریت‌ها و منوها به فارسی، با فونت خوانا و نصاب ساده.';
+    FP.$('#heroCta').innerHTML = '<a class="btn btn-primary btn-lg" href="product.html?id=' + encodeURIComponent(feat.id) + '">فارسی‌ساز ' + FP.en(/GTA|Grand Theft/i.test(feat.title_en || '') ? 'GTA V' : feat.title_en) + ' <span aria-hidden="true">←</span></a>' +
+      '<a class="btn btn-ghost btn-lg" href="#how">چطور نصب کنم؟</a>';
+  }
+  hv.innerHTML = shots.map(function (u, i) {
+    return '<div class="hero-card"><img src="' + FP.esc(u) + '" alt="" width="1280" height="720" decoding="async"></div>';
+  }).join('') +
+    '<div class="hero-chip c1"><span class="ic">' + I.bolt + '</span>نصب با یک کلیک</div>' +
+    '<div class="hero-chip c2"><span class="ic">' + I.shield + '</span>فقط حالت داستانی</div>';
+  if (!shots.length) hv.hidden = true;
 
   // hero card parallax on mouse
   if (!FP.reduceMotion && window.matchMedia('(pointer:fine)').matches) {
     var cards = FP.$$('.hero-card', hv);
     document.querySelector('.hero').addEventListener('pointermove', function (e) {
       var x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
-      cards.forEach(function (c, i) { var k = (i + 1) * 8; c.style.translate = (x * k) + 'px ' + (y * k) + 'px'; });
+      cards.forEach(function (c, i) { var k = (i + 1) * 6; c.style.translate = (x * k) + 'px ' + (y * k) + 'px'; });
     });
   }
 
-  // stats
+  // at-a-glance: only numbers computed from data + true non-numeric claims
   FP.$('#statProducts').setAttribute('data-count-to', P.length);
+  var nFree = P.filter(FP.isFree).length;
+  if (nFree && nFree === P.length) { FP.$('#statFree').textContent = 'رایگان'; FP.$('#statFreeLbl').textContent = P.length > 1 ? 'همه‌ی فارسی‌سازها' : 'فارسی‌ساز فعلی'; }
+  else { FP.$('#statFree').setAttribute('data-count-to', nFree); }
+  FP.$('#statIc1').innerHTML = I.bolt; FP.$('#statIc2').innerHTML = I.shield;
   var statsDone = false, statsEl = FP.$('.stats-grid');
   function runStats() { if (statsDone) return; statsDone = true; FP.$$('[data-count-to]').forEach(FP.countUp); }
   if ('IntersectionObserver' in window) {
@@ -29,40 +40,24 @@
     so.observe(statsEl);
   } else runStats();
 
-  // product sections
-  var best = P.filter(function (p) { return p.is_bestseller; }).sort(function (a, b) { return b.rating - a.rating; }).slice(0, 4);
-  var news = P.filter(function (p) { return p.is_new; }).sort(function (a, b) { return (FP.isFree(b) - FP.isFree(a)) || (b._order - a._order); }).slice(0, 4);
-  if (news.length < 4) news = news.concat(P.slice().reverse().filter(function (p) { return news.indexOf(p) < 0; })).slice(0, 4);
-  var deals = P.filter(function (p) { return p.discount_percent > 0; }).sort(function (a, b) { return b.discount_percent - a.discount_percent; }).slice(0, 4);
-  FP.renderGrid(FP.$('#bestGrid'), best, { sk: 4 });
-  FP.renderGrid(FP.$('#newGrid'), news, { sk: 4, delay: 550 });
-  FP.renderGrid(FP.$('#dealGrid'), deals, { sk: 4, delay: 650 });
-
-  // free strip
-  var frees = P.filter(FP.isFree), fs = FP.$('#freeStrip');
-  if (fs && frees.length) {
-    FP.$('#freeList').innerHTML = frees.slice(0, 3).map(function (p, i) {
-      return '<a class="free-item reveal" style="--d:' + i * 0.08 + 's;--glow:' + FP.accent(p) + '" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
-        '<span class="fi-thumb">' + FP.cover(p, { uid: 'f' + i }) + '</span>' +
-        '<span class="fi-body"><span class="fi-title">' + FP.esc(p.title_fa) + ' <span class="tag free">رایگان</span></span>' +
-        '<span class="fi-sub">' + FP.en(p.title_en) + '</span>' +
-        '<span class="fi-cta">' + I.download + (p.download_url ? 'دانلود رایگان' : 'دانلود رایگان، به‌زودی') + '</span></span></a>';
-    }).join('');
-    fs.hidden = false;
-  }
-
-  // genre tiles
-  var colors = ['#7c5cff', '#22d3ee', '#f472b6', '#34d399', '#fbbf24', '#f87171', '#60a5fa', '#a78bfa'];
-  FP.$('#genreTiles').innerHTML = FP.genres().map(function (g, i) {
-    return '<a class="genre-tile reveal" style="--c:' + colors[i % colors.length] + ';--d:' + (i % 6) * 0.05 + 's" href="catalog.html?genre=' + encodeURIComponent(g.name) + '">' +
-      FP.esc(g.name) + '<span>' + FP.fa(g.count) + ' فارسی‌ساز</span></a>';
-  }).join('');
+  // featured free products (real data only)
+  var frees = P.filter(FP.isFree);
+  FP.$('#featureList').innerHTML = frees.length ? frees.map(function (p, i) {
+    var url = 'product.html?id=' + encodeURIComponent(p.id);
+    var feats = (p.features_fa || []).slice(0, 3).map(function (f) { return '<li>' + I.check + '<span>' + FP.autoLtr(f) + '</span></li>'; }).join('');
+    return '<article class="feature-card reveal" style="--d:' + i * 0.08 + 's;--glow:' + FP.accent(p) + '">' +
+      '<a class="fc-media" href="' + url + '" tabindex="-1" aria-hidden="true">' + FP.cover(p, { uid: 'fc' + i }) + '<span class="tag free">رایگان</span></a>' +
+      '<div class="fc-body"><h3><a href="' + url + '">فارسی‌ساز ' + FP.esc(p.title_fa) + '</a></h3><div class="fc-sub">' + FP.en(p.title_en) + (p.version ? ' · نسخه‌ی ' + FP.en(p.version) : '') + '</div>' +
+      '<ul class="fc-feats">' + feats + '</ul>' +
+      (p.warning_fa ? '<p class="fc-warn">' + I.info + '<span>' + FP.autoLtr(p.warning_fa) + '</span></p>' : '') +
+      '<div class="fc-actions"><a class="btn btn-primary" href="' + url + '">' + I.download + (p.download_url ? 'دانلود رایگان' : 'جزئیات و دانلود (به‌زودی)') + '</a></div></div></article>';
+  }).join('') : '<p class="empty">به‌زودی…</p>';
 
   // steps
   var steps = [
-    { ic: I.cart, t: 'خرید', d: 'فارسی‌ساز بازی‌ات را پیدا کن، به سبد اضافه کن و پرداخت را انجام بده.' },
-    { ic: I.download, t: 'دانلود', d: 'لینک دانلود مستقیم و پرسرعت بلافاصله در حساب کاربری‌ات قرار می‌گیرد.' },
-    { ic: I.gear, t: 'نصب', d: 'نصب‌کننده را اجرا کن، پوشه‌ی بازی را انتخاب کن و از بازی فارسی لذت ببر.' }
+    { ic: I.search, t: 'انتخاب', d: 'فارسی‌ساز بازی‌ات را پیدا کن و در صفحه‌اش نسخه‌ی سازگار و هشدارها را بخوان.' },
+    { ic: I.download, t: 'دانلود', d: 'فایل نصاب را از صفحه‌ی همان فارسی‌ساز دانلود کن.' },
+    { ic: I.gear, t: 'نصب', d: 'نصاب را اجرا کن، پوشه‌ی بازی را تأیید کن و دکمه‌ی نصب را بزن.' }
   ];
   FP.$('#steps').innerHTML = steps.map(function (s, i) {
     return '<div class="step reveal" style="--d:' + i * 0.12 + 's"><span class="n" aria-hidden="true">' + FP.fa(i + 1) + '</span><div class="ic">' + s.ic + '</div><h3>' + s.t + '</h3><p>' + s.d + '</p></div>';
@@ -70,12 +65,13 @@
 
   // FAQ
   var faqs = [
-    ['فارسی‌ساز با کدام نسخه‌ی بازی سازگار است؟', 'نسخه‌ی سازگار هر فارسی‌ساز در صفحه‌ی همان محصول نوشته شده است. معمولاً با آخرین نسخه‌ی <bdi dir="ltr">Steam</bdi> و نسخه‌های رایج کامپیوتر هماهنگ است.'],
-    ['آیا نصب فارسی‌ساز به فایل‌های بازی آسیب می‌زند؟', 'خیر. نصب‌کننده قبل از هر تغییری از فایل‌های اصلی نسخه‌ی پشتیبان می‌گیرد و هر زمان بخواهی می‌توانی بازی را به حالت انگلیسی برگردانی.'],
-    ['بعد از خرید، فایل را چطور دریافت می‌کنم؟', 'بلافاصله پس از پرداخت، لینک دانلود در حساب کاربری و ایمیلت قرار می‌گیرد. (در نسخه‌ی بتا پرداخت هنوز فعال نیست.)'],
-    ['اگر بازی آپدیت شد، فارسی‌ساز هم آپدیت می‌شود؟', 'بله. به‌روزرسانی‌های فارسی‌ساز برای خریداران رایگان است و از طریق همان لینک قابل دریافت است.'],
-    ['آیا امکان بازگشت وجه وجود دارد؟', 'اگر فارسی‌ساز روی سیستم شما کار نکند و پشتیبانی نتواند مشکل را حل کند، مبلغ پرداختی بازگردانده می‌شود.']
+    ['فارسی‌ساز با کدام نسخه‌ی بازی سازگار است؟', 'نسخه‌ای که فارسی‌ساز روی آن تست شده، در صفحه‌ی همان محصول نوشته شده است.'],
+    ['آیا نصب فارسی‌ساز به فایل‌های بازی آسیب می‌زند؟', 'خیر. فارسی‌ساز <bdi dir="ltr">GTA V</bdi> از طریق پوشه‌ی <bdi dir="ltr">mods</bdi> نصب می‌شود و فایل‌های اصلی بازی دست نمی‌خورند. حذف کامل هم با یک دکمه در همان نصاب انجام می‌شود.'],
+    ['می‌توانم با فارسی‌ساز آنلاین بازی کنم؟', 'نه. فارسی‌ساز فقط برای حالت داستانی است. با آن وارد <bdi dir="ltr">GTA Online</bdi> نشوید، چون ممکن است حسابتان بن شود.'],
+    ['ترجمه چطور انجام شده؟', 'ترجمه با کمک هوش مصنوعی انجام و به‌صورت خودکار بازبینی شده است، پس ممکن است جاهایی اشتباه داشته باشد. خط‌هایی که با آپدیت‌های بازی عوض شده‌اند انگلیسی می‌مانند.'],
+    ['فارسی‌ساز رایگان است؟', 'بله. فارسی‌ساز <bdi dir="ltr">GTA V</bdi> کاملاً رایگان است.']
   ];
+  if (P.some(function (p) { return FP.isFree(p) && !p.download_url; })) faqs.push(['چرا دکمه‌ی دانلود هنوز فعال نیست؟', 'نسخه‌ی نهایی فارسی‌ساز در حال آماده‌سازی است و به‌محض انتشار، دکمه‌ی دانلود فعال می‌شود.']);
   FP.$('#faqList').innerHTML = faqs.map(function (f, i) {
     return '<div class="faq-item reveal" style="--d:' + i * 0.06 + 's"><button class="faq-q" type="button" aria-expanded="false" aria-controls="faq' + i + '" id="faqq' + i + '">' + f[0] +
       '<span class="pm" aria-hidden="true">' + I.plus + '</span></button><div class="faq-a" id="faq' + i + '" role="region" aria-labelledby="faqq' + i + '"><div><p>' + f[1] + '</p></div></div></div>';

@@ -153,8 +153,8 @@
   var myTags = FP.genreTags(p);
   var rel = FP.products.filter(function (x) { return x !== p; }).map(function (x) {
     var score = FP.genreTags(x).filter(function (g) { return myTags.indexOf(g) >= 0; }).length;
-    return { x: x, s: score + x.rating / 10 };
+    return { x: x, s: score + (x.rating || 0) / 10 };
   }).sort(function (a, b) { return b.s - a.s; }).slice(0, 4).map(function (o) { return o.x; });
-  FP.renderGrid(FP.$('#relGrid'), rel, { sk: 4 });
+  if (rel.length) FP.renderGrid(FP.$('#relGrid'), rel, { sk: 4 }); else FP.$('#relSection').hidden = true;
   FP.enhance(document);
 })();
