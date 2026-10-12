@@ -233,7 +233,7 @@
   function buildLayout() {
     var header = '<a class="skip-link" href="#main">پرش به محتوا</a>' +
       '<header class="site-header" id="siteHeader"><div class="container header-inner">' +
-      '<a class="logo" href="index.html" aria-label="پرشیاپلی، صفحه اصلی"><span class="logo-mark" aria-hidden="true"><span class="logo-3d"><picture><source srcset="assets/brand/emblem-128.webp 1x, assets/brand/emblem-256.webp 2x" type="image/webp"><img src="assets/brand/emblem-128.png" srcset="assets/brand/emblem-128.png 1x, assets/brand/emblem-256.png 2x" width="44" height="44" alt="" decoding="async" draggable="false"></picture><span class="logo-shine"></span></span></span><span>پرشیاپلی<small>فارسی‌ساز بازی‌های کامپیوتر</small></span><span class="beta-tag">بتا</span></a>' +
+      '<a class="logo" href="index.html" aria-label="پرشیاپلی، صفحه اصلی"><span class="logo-mark" aria-hidden="true"><picture><source srcset="assets/brand/emblem3d-88.webp 1x, assets/brand/emblem3d-176.webp 2x" type="image/webp"><img src="assets/brand/emblem3d-88.png" srcset="assets/brand/emblem3d-88.png 1x, assets/brand/emblem3d-176.png 2x" width="44" height="44" alt="" decoding="async" draggable="false"></picture></span><span>پرشیاپلی<small>فارسی‌ساز بازی‌های کامپیوتر</small></span><span class="beta-tag">بتا</span></a>' +
       '<nav class="main-nav" id="mainNav" aria-label="منوی اصلی">' + navLink('index.html', 'خانه', 'home') + navLink('catalog.html', 'فروشگاه', 'catalog') +
       navLink('about.html', 'درباره ما', 'about') + navLink('about.html#contact', 'تماس با ما', 'contact') + '</nav>' +
       '<div class="header-actions">' +
@@ -243,7 +243,7 @@
       '<button class="icon-btn menu-toggle" id="menuBtn" type="button" aria-label="باز کردن منو" aria-expanded="false" aria-controls="mainNav">' + I.menu + '</button>' +
       '</div></div></header>';
     var footer = '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
-      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true"><span class="logo-3d"><picture><source srcset="assets/brand/emblem-128.webp 1x, assets/brand/emblem-256.webp 2x" type="image/webp"><img src="assets/brand/emblem-128.png" srcset="assets/brand/emblem-128.png 1x, assets/brand/emblem-256.png 2x" width="44" height="44" alt="" decoding="async" draggable="false"></picture><span class="logo-shine"></span></span></span><span>پرشیاپلی</span></a><p>فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی با فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p></div>' +
+      '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true"><picture><source srcset="assets/brand/emblem3d-88.webp 1x, assets/brand/emblem3d-176.webp 2x" type="image/webp"><img src="assets/brand/emblem3d-88.png" srcset="assets/brand/emblem3d-88.png 1x, assets/brand/emblem3d-176.png 2x" width="44" height="44" alt="" decoding="async" draggable="false"></picture></span><span>پرشیاپلی</span></a><p>فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی با فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p></div>' +
       '<div><h4>دسترسی سریع</h4><ul><li><a href="index.html">خانه</a></li><li><a href="catalog.html">همه‌ی فارسی‌سازها</a></li><li><a href="catalog.html?free=1">فارسی‌سازهای رایگان</a></li></ul></div>' +
       '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی نصب</a></li><li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li></ul></div>' +
       '<div id="footer-contact"><h4>ارتباط با ما</h4><ul><li>راه‌های ارتباطی به‌زودی اضافه می‌شوند.</li></ul></div>' +
@@ -414,24 +414,3 @@
   if (document.readyState !== 'loading') FP.enhance(document);
 })();
 
-/* 3D logo tilt + spin */
-function initLogo3D(){
-  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  document.querySelectorAll('.logo').forEach(function(a){
-    var t=a.querySelector('.logo-3d');if(!t)return;
-    a.addEventListener('pointermove',function(e){
-      if(e.pointerType!=='mouse'||t.classList.contains('spin'))return;
-      var r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      x=Math.max(-.5,Math.min(.5,x));y=Math.max(-.5,Math.min(.5,y));
-      t.style.setProperty('--ry',(x*24).toFixed(1)+'deg');t.style.setProperty('--rx',(-y*24).toFixed(1)+'deg');});
-    a.addEventListener('pointerleave',function(){t.style.removeProperty('--rx');t.style.removeProperty('--ry');});
-    a.addEventListener('pointerdown',function(){
-      t.style.removeProperty('--rx');t.style.removeProperty('--ry');
-      t.classList.remove('spin');void t.offsetWidth;t.classList.add('spin');});
-    a.addEventListener('click',function(e){
-      if(e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
-      e.preventDefault();var h=a.href;setTimeout(function(){location.href=h},650);});
-    t.addEventListener('animationend',function(){t.classList.remove('spin');});
-  });
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(initLogo3D,0)});else setTimeout(initLogo3D,0);

@@ -18,6 +18,32 @@
     '<div class="hero-chip c2"><span class="ic">' + I.shield + '</span>فقط حالت داستانی</div>';
   if (!shots.length) hv.hidden = true;
 
+  // 3D emblem: static high-res render first, live WebGL (lazy) on top when possible
+  var em = document.createElement('div');
+  em.className = 'hero-emblem';
+  em.innerHTML = '<canvas></canvas><img src="assets/brand/emblem3d-hero.webp" width="320" height="320" alt="" decoding="async" draggable="false">';
+  hv.appendChild(em); hv.hidden = false;
+  (function () {
+    if (location.protocol === 'file:') return; // textures can't load into WebGL from file://
+    var c = document.createElement('canvas');
+    if (!(c.getContext('webgl2') || c.getContext('webgl'))) return;
+    var started = false;
+    function boot() {
+      if (started) return; started = true;
+      var s = document.createElement('script');
+      s.src = 'js/vendor/persia-emblem.min.js'; s.async = true;
+      s.onload = function () {
+        try { window.PersiaEmblem.create(em.querySelector('canvas'), { interactEl: em, reduced: FP.reduceMotion }); }
+        catch (e) { /* keep static image */ }
+      };
+      document.head.appendChild(s);
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); boot(); } }, { rootMargin: '200px' });
+      io.observe(em);
+    } else boot();
+  })();
+
   // hero card parallax on mouse
   if (!FP.reduceMotion && window.matchMedia('(pointer:fine)').matches) {
     var cards = FP.$$('.hero-card', hv);

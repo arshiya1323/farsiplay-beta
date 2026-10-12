@@ -645,23 +645,25 @@ html[data-theme="light"] .fc-warn{color:#c2410c}
 .soon-note-box{margin:22px 0 0;padding:18px 20px;border:1.5px dashed var(--border);border-radius:var(--radius);color:var(--muted);text-align:center;font-weight:700}
 .soon-note-box b{color:var(--text)}
 
-/* === 3D metallic logo === */
-.logo-mark{width:44px;height:44px;border-radius:0;background:none;box-shadow:none;perspective:300px;display:block;transition:none}
-.logo:hover .logo-mark{transform:none}
-.logo-3d{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;
-  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s var(--ease),filter .3s;
-  filter:drop-shadow(0 0 6px rgba(245,190,70,.45)) drop-shadow(0 6px 10px rgba(0,0,0,.45))}
-.logo-3d img{display:block;width:100%;height:100%;-webkit-user-drag:none;user-select:none}
-.logo:hover .logo-3d,.logo:focus-visible .logo-3d{filter:drop-shadow(0 0 10px rgba(255,205,90,.75)) drop-shadow(0 8px 14px rgba(0,0,0,.5))}
-.logo-shine{position:absolute;inset:0;pointer-events:none;overflow:hidden;
-  clip-path:polygon(50% 1.5%,92% 25.7%,92% 74.3%,50% 98.5%,8% 74.3%,8% 25.7%)}
-.logo-shine::after{content:"";position:absolute;top:-20%;bottom:-20%;width:40%;left:-60%;
-  background:linear-gradient(100deg,transparent,rgba(255,240,200,.55),transparent);transform:skewX(-15deg)}
-.logo:hover .logo-shine::after{animation:logoShine .9s ease-out}
-.logo-3d.spin{animation:logoSpin .9s cubic-bezier(.3,.7,.3,1)}
-@keyframes logoShine{to{left:120%}}
-@keyframes logoSpin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
-[data-theme="light"] .logo-3d{filter:drop-shadow(0 0 5px rgba(200,140,20,.45)) drop-shadow(0 5px 8px rgba(30,20,60,.3))}
+/* === PersiaPlay 3D emblem === */
+.logo-mark{width:44px;height:44px;border-radius:0;background:none;box-shadow:none;display:block;transition:transform .3s var(--ease)}
+.logo-mark img{display:block;width:100%;height:100%;-webkit-user-drag:none;user-select:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+.logo:hover .logo-mark{transform:translateY(-1px) scale(1.06)}
+.logo:hover .logo-mark img{filter:drop-shadow(0 0 8px rgba(255,200,90,.55)) drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+html[data-theme="light"] .logo-mark img{filter:drop-shadow(0 3px 5px rgba(40,25,80,.28))}
 .site-footer .logo-mark{width:40px;height:40px}
-@media (max-width:640px){.logo-mark{width:38px;height:38px}}
-@media (prefers-reduced-motion:reduce){.logo-3d{transform:none!important;transition:none;animation:none!important}.logo-shine::after{animation:none!important;display:none}}
+@media (max-width:640px){.logo-mark{width:40px;height:40px}}
+.hero-emblem{position:absolute;z-index:6;width:min(340px,66%);aspect-ratio:1;top:64%;inset-inline-end:-5%;translate:0 -50%;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent}
+.hero-emblem:active{cursor:grabbing}
+.hero-emblem::before{content:"";position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle,rgba(255,196,80,.42),rgba(150,90,255,.22) 45%,transparent 70%);filter:blur(22px);z-index:-1;animation:emblemGlow 5s ease-in-out infinite}
+html[data-theme="light"] .hero-emblem::before{background:radial-gradient(circle,rgba(255,190,70,.45),rgba(120,80,240,.18) 45%,transparent 70%)}
+.hero-emblem img,.hero-emblem canvas{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+.hero-emblem img{filter:drop-shadow(0 22px 26px rgba(0,0,0,.5));transition:opacity .5s}
+.hero-emblem canvas{opacity:0;transition:opacity .5s;filter:drop-shadow(0 22px 26px rgba(0,0,0,.5))}
+.hero-emblem canvas.is-ready{opacity:1}
+.hero-emblem canvas.is-ready+img,.hero-emblem.live img{opacity:0}
+@keyframes emblemGlow{0%,100%{opacity:.75;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+@media (max-width:1024px){.hero-emblem{width:min(260px,50%)}}
+@media (max-width:640px){.hero-emblem{width:200px;max-width:52%;top:auto;bottom:-8%;inset-inline:auto;left:-2%;translate:none}
+  .hero-shots .hero-chip.c1{inset-inline-start:2%!important;inset-inline-end:auto!important}}
+@media (prefers-reduced-motion:reduce){.hero-emblem::before{animation:none}}
