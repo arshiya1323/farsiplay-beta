@@ -3,3 +3,4 @@
 @font-face{font-family:"Vazirmatn";src:url("../assets/fonts/Vazirmatn-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
 @font-face{font-family:"Vazirmatn";src:url("../assets/fonts/Vazirmatn-ExtraBold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-ExtraBold.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
 @font-face{font-family:"Vazirmatn";src:url("../assets/fonts/Vazirmatn-Black.woff2") format("woff2"),url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:"Reem Kufi";src:url("../assets/fonts/ReemKufi-Variable.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}

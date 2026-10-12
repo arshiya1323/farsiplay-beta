@@ -653,3 +653,10 @@ html[data-theme="light"] .fc-warn{color:#c2410c}
 html[data-theme="light"] .logo-mark img{filter:drop-shadow(0 3px 5px rgba(40,25,80,.28))}
 .site-footer .logo-mark{width:40px;height:40px}
 @media (max-width:640px){.logo-mark{width:40px;height:40px}}
+/* Wordmark: Reem Kufi gradient (option 3) */
+.logo-name{display:inline-block;line-height:1.15;font-family:"Reem Kufi",Vazirmatn,sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:.5px;position:relative;padding-bottom:3px;
+ background:linear-gradient(90deg,#f4c55c,#ff9f6b 50%,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo-name::after{content:"";position:absolute;inset-inline:10% 0;bottom:0;height:2px;border-radius:2px;background:linear-gradient(90deg,#f4c55c,#a78bfa);opacity:.8}
+html[data-theme="light"] .logo-name{background-image:linear-gradient(90deg,#b7791f,#d9622b 50%,#6d4fd8)}
+html[data-theme="light"] .logo-name::after{background:linear-gradient(90deg,#b7791f,#6d4fd8)}
+@media (max-width:640px){.logo-name{font-size:1.28rem}}
