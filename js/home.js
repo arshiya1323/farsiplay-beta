@@ -20,8 +20,11 @@
       '<a class="btn btn-ghost btn-lg" href="#how">چطور نصب کنم؟</a>';
   }
   if (shots.length) {
+    var heroPos = (feat && typeof feat.cover_position === 'string' && /^[a-z%0-9 .+-]+$/i.test(feat.cover_position)) ? feat.cover_position : '';
     hv.innerHTML = shots.map(function (u, i) {
-      return '<div class="hero-card"><img src="' + FP.esc(u) + '" alt="" width="1280" height="720" decoding="async"></div>';
+      var posAttr = (heroPos && feat && u === feat.cover) ? ' style="object-position:' + FP.esc(heroPos) + '"' : '';
+      var thumb = String(u).replace(/(\.[a-z0-9]+)$/i, '-640$1');
+      return '<div class="hero-card"><img src="' + FP.esc(u) + '" srcset="' + FP.esc(thumb) + ' 640w, ' + FP.esc(u) + ' 1280w" sizes="(max-width:720px) 90vw, 420px" alt="" width="1280" height="720" decoding="async" fetchpriority="' + (i === 0 ? 'high' : 'low') + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '"' + posAttr + '></div>';
     }).join('') +
       '<div class="hero-chip c1"><span class="ic">' + I.bolt + '</span>نصب با یک کلیک</div>' +
       '<div class="hero-chip c2"><span class="ic">' + I.shield + '</span>بدون آسیب به فایل بازی</div>';
@@ -85,9 +88,10 @@
     { ic: I.download, t: 'دانلود', d: 'فایل نصاب را از صفحه‌ی همان فارسی‌ساز دانلود کن.' },
     { ic: I.gear, t: 'نصب', d: 'نصاب را اجرا کن، پوشه‌ی بازی را تأیید کن و دکمه‌ی نصب را بزن.' }
   ];
+  var guideLinks = P.map(function (p) { return FP.guideUrl(p) ? '<a class="chip" href="' + FP.guideUrl(p) + '">آموزش ' + FP.esc(p.title_en || p.title_fa) + '</a>' : ''; }).filter(Boolean).join('');
   FP.$('#steps').innerHTML = steps.map(function (s, i) {
     return '<div class="step reveal" style="--d:' + i * 0.12 + 's"><span class="n" aria-hidden="true">' + FP.fa(i + 1) + '</span><div class="ic">' + s.ic + '</div><h3>' + s.t + '</h3><p>' + s.d + '</p></div>';
-  }).join('');
+  }).join('') + (guideLinks ? '<div class="guide-chips reveal" style="grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px">' + guideLinks + '</div>' : '');
 
   // FAQ — generic, no product-specific names
   var faqs = [

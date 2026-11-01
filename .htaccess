@@ -28,3 +28,13 @@ RewriteRule ^ https://persiaplay.ir%{REQUEST_URI} [L,R=301]
    php_flag log_errors On
 </IfModule>
 # END cPanel-generated php ini directives, do not edit
+
+# Browser cache: HTML/JS/CSS/JSON revalidate; images/fonts cache 7 days
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|js|css|json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|woff2|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>

@@ -38,7 +38,51 @@ window.PRODUCTS = [
     },
     "warning_fa": "قبل از نصب از سیوهایتان پشتیبان بگیرید. فقط برای نسخه‌ی ۲٫۳۱ به‌همراه Phantom Liberty.",
     "accent": "#FCEE0A",
-    "cover": "assets/shots/cyberpunk-2077/cover.webp",
-    "screenshots": []
+    "cover": "assets/shots/cyberpunk-2077/cover-v3.webp",
+    "screenshots": [],
+    "cover_position": "right center"
+  },
+  {
+    "id": "the-killing-antidote",
+    "title_fa": "پادزهر کشنده",
+    "title_en": "The Killing Antidote",
+    "genre_fa": "ترسناک، اکشن",
+    "platform": "PC",
+    "version": "1.0.2",
+    "size_mb": 1.9,
+    "is_free": true,
+    "download_url": "downloads/PersiaPlay_TKA_FA_Installer.exe",
+    "price_toman": 0,
+    "discount_percent": 0,
+    "rating": null,
+    "is_new": true,
+    "is_bestseller": false,
+    "features_fa": [
+      "ترجمه‌ی کامل متن بازی به‌همراه DLCها (۱۵۴۸ رشته‌ی متنی)",
+      "تست‌شده داخل بازی و فارسی‌اش درست و خوانا نمایش داده می‌شه",
+      "فونت فارسی خوانا بر پایه‌ی Vazirmatn",
+      "نصاب یک‌فایله با ظاهر مشترک PersiaPlay و دکمه‌ی حذف فارسی‌ساز",
+      "زبان بازی باید روی English باشه تا فارسی‌ساز درست کار کنه"
+    ],
+    "description_fa": "فارسی‌ساز رایگان The Killing Antidote نسخه‌ی ۱٫۰٫۲، شامل متن بازی و DLCها (۱۵۴۸ رشته). داخل بازی تست شده و همه‌چیز درست و خوانا نمایش داده می‌شه. با فونت Vazirmatn و نصاب یک‌فایله‌ی PersiaPlay می‌تونی نصب کنی و هر وقت خواستی با دکمه‌ی حذف، فارسی‌ساز رو برداری. فقط یادت باشه زبان بازی روی English باشه.",
+    "install_steps_fa": [
+      "بازی رو ببندید.",
+      "زبان بازی رو روی English بگذارید.",
+      "فایل PersiaPlay_TKA_FA_Installer.exe رو دانلود و اجرا کنید.",
+      "پوشه‌ی نصب بازی رو انتخاب کنید.",
+      "دکمه‌ی نصب رو بزنید و صبر کنید تا کار تمام شود.",
+      "برای حذف فارسی‌ساز، دوباره همان نصاب را اجرا کنید و دکمه‌ی حذف را بزنید."
+    ],
+    "game_version_fa": "تست‌شده روی نسخه‌ی اصلی The Killing Antidote به‌همراه DLCها",
+    "credits_fa": "فونت Vazirmatn (مجوز SIL Open Font License)",
+    "credits_links": {
+      "Vazirmatn": "https://github.com/rastikerdar/vazirmatn"
+    },
+    "warning_fa": "قبل از نصب از سیوهایتان پشتیبان بگیرید. زبان بازی باید روی English باشد؛ در غیر این صورت فارسی‌ساز درست کار نمی‌کند.",
+    "accent": "#C45C4A",
+    "cover": "assets/shots/the-killing-antidote/cover-v2.webp",
+    "screenshots": [],
+    "cover_position": "left center",
+    "sha256": "89bfeac5c0016f556832eb5a11b8bd0035e30dbc0d9a75972c8d31150883223b"
   }
 ];

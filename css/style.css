@@ -670,3 +670,22 @@ html[data-theme="light"] .logo-name::after{background:linear-gradient(90deg,#b77
 .hero-empty .ic svg{width:28px;height:28px}
 .hero-empty p{margin:0;font-size:1.05rem;line-height:1.7}
 .hero-empty b{color:var(--text)}
+
+
+/* ----- Install guide pages ----- */
+.guide-page{padding-bottom:48px}
+.guide-layout{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:28px;align-items:start}
+.guide-side{position:sticky;top:88px}
+.guide-cover{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+.guide-cover img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover}
+.guide-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.guide-actions .btn svg{width:18px;height:18px}
+.guide-main .guide-h{display:flex;align-items:center;gap:10px;margin:22px 0 14px;font-size:1.25rem;font-weight:900}
+.guide-main .guide-h .bar{width:6px;height:1.1em;border-radius:4px;background:var(--grad)}
+.guide-more{margin:16px 0 0}
+.actions-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.actions-row .btn{flex:0 1 auto}
+@media (max-width:860px){
+  .guide-layout{grid-template-columns:1fr}
+  .guide-side{position:static}
+}

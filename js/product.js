@@ -19,7 +19,66 @@
     return;
   }
 
-  document.title = 'فارسی‌ساز ' + p.title_fa + ' | پرشیاپلی (بتا)';
+  var pageTitle = 'فارسی‌ساز ' + p.title_fa + ' | پرشیاپلی';
+  var pageDesc = (p.description_fa && String(p.description_fa).trim())
+    ? String(p.description_fa).replace(/\s+/g, ' ').slice(0, 160)
+    : ('دانلود فارسی‌ساز رایگان بازی کامپیوتر «' + p.title_fa + '» از پرشیاپلی؛ زیرنویس و منوی فارسی با نصب آسان.');
+  var pageUrl = 'https://persiaplay.ir/product.html?id=' + encodeURIComponent(p.id);
+  var pageImg = (typeof p.cover === 'string' && /^assets\//.test(p.cover))
+    ? 'https://persiaplay.ir/' + p.cover
+    : 'https://persiaplay.ir/assets/brand/icon-192.png';
+
+  function upsertMeta(attr, key, content) {
+    var sel = 'meta[' + attr + '="' + key + '"]';
+    var el = document.head.querySelector(sel);
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+    el.setAttribute('content', content);
+  }
+  function upsertLink(rel, href) {
+    var el = document.head.querySelector('link[rel="' + rel + '"]');
+    if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
+    el.setAttribute('href', href);
+  }
+  function upsertJsonLd(id, data) {
+    var el = document.getElementById(id);
+    if (!el) { el = document.createElement('script'); el.type = 'application/ld+json'; el.id = id; document.head.appendChild(el); }
+    el.textContent = JSON.stringify(data);
+  }
+
+  document.title = pageTitle;
+  upsertMeta('name', 'description', pageDesc);
+  upsertLink('canonical', pageUrl);
+  upsertMeta('property', 'og:type', 'website');
+  upsertMeta('property', 'og:locale', 'fa_IR');
+  upsertMeta('property', 'og:site_name', 'پرشیاپلی');
+  upsertMeta('property', 'og:title', pageTitle);
+  upsertMeta('property', 'og:description', pageDesc);
+  upsertMeta('property', 'og:url', pageUrl);
+  upsertMeta('property', 'og:image', pageImg);
+  upsertMeta('name', 'twitter:card', 'summary_large_image');
+  upsertMeta('name', 'twitter:title', pageTitle);
+  upsertMeta('name', 'twitter:description', pageDesc);
+  upsertMeta('name', 'twitter:image', pageImg);
+  upsertJsonLd('product-jsonld', {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'فارسی‌ساز ' + p.title_fa,
+    alternateName: p.title_en ? ('Farsi patch for ' + p.title_en) : undefined,
+    applicationCategory: 'GameApplication',
+    operatingSystem: p.platform || 'PC',
+    inLanguage: 'fa',
+    description: pageDesc,
+    url: pageUrl,
+    image: pageImg,
+    softwareVersion: p.version || undefined,
+    offers: {
+      '@type': 'Offer',
+      price: 0,
+      priceCurrency: 'IRR',
+      availability: 'https://schema.org/InStock'
+    }
+  });
+
   FP.$('#crumbTitle').textContent = p.title_fa;
   var fin = FP.finalPrice(p), free = FP.isFree(p), shots = p.screenshots || [];
   var tags = FP.genreTags(p).map(function (g) { return '<a class="chip" style="padding:4px 12px;font-size:.85rem" href="catalog.html?genre=' + encodeURIComponent(g) + '">' + FP.esc(g) + '</a>'; }).join('');
@@ -28,8 +87,8 @@
 
   var hasCover = (typeof p.cover === 'string' && /^assets\//.test(p.cover)) || shots.length;
   var media = shots.length
-    ? '<button class="media-btn" type="button" data-shot="0" aria-label="نمایش بزرگ تصویر">' + FP.cover(p, { eager: true }) + '<span class="zoom-hint" aria-hidden="true">' + I.search + '</span></button>'
-    : FP.cover(p, { eager: true, uid: 'main' });
+    ? '<button class="media-btn" type="button" data-shot="0" aria-label="نمایش بزرگ تصویر">' + FP.cover(p, { eager: true, sizes: '(max-width:900px) 100vw, 560px' }) + '<span class="zoom-hint" aria-hidden="true">' + I.search + '</span></button>'
+    : FP.cover(p, { eager: true, uid: 'main', sizes: '(max-width:900px) 100vw, 560px' });
 
   var warning = p.warning_fa ? '<div class="warn-box" role="alert">' + warnIcon + '<div><b>هشدار مهم</b><p>' + FP.autoLtr(p.warning_fa) + '</p></div></div>' : '';
 
@@ -42,10 +101,19 @@
   else if (p.download_url && /^(https:\/\/|assets\/|downloads\/)/.test(p.download_url)) action = '<a class="btn btn-primary btn-lg" href="' + FP.esc(p.download_url) + '" rel="noopener">' + I.download + 'دانلود رایگان</a>';
   else action = '<button class="btn btn-primary btn-lg" type="button" disabled aria-describedby="soonNote">' + I.download + 'به‌زودی</button>';
   var soon = free && !p.download_url ? '<p class="soon-note" id="soonNote">' + I.info + '<span>نسخه‌ی نهایی در حال آماده‌سازیه و به‌زودی لینک دانلود رایگان همین‌جا قرار می‌گیره.</span></p>' : '';
+  var guideHref = FP.guideUrl(p);
+  var guideCta = guideHref
+    ? '<a class="btn btn-ghost" href="' + FP.esc(guideHref) + '">' + I.gear + 'آموزش نصب کامل</a>'
+    : '';
+  if (guideCta) {
+    // append next to primary action inside buy-box
+    action = '<div class="actions-row">' + action + guideCta + '</div>';
+  }
 
   var guide = Array.isArray(p.install_steps_fa) && p.install_steps_fa.length
     ? '<ol class="guide">' + p.install_steps_fa.map(function (st) { return '<li>' + FP.autoLtr(st) + '</li>'; }).join('') + '</ol>' +
-      (p.game_version_fa ? '<div class="note">' + FP.autoLtr(p.game_version_fa) + '</div>' : '')
+      (p.game_version_fa ? '<div class="note">' + FP.autoLtr(p.game_version_fa) + '</div>' : '') +
+      (guideHref ? '<p class="guide-more"><a class="link-more" href="' + FP.esc(guideHref) + '">صفحه‌ی کامل آموزش نصب <span aria-hidden="true">←</span></a></p>' : '')
     : '<ol class="guide">' +
       '<li>فایل فارسی‌ساز را از بخش «دانلودهای من» دریافت و از حالت فشرده خارج کنید.</li>' +
       '<li>بازی و لانچر <bdi dir="ltr">' + FP.esc(p.platform) + '</bdi> را کامل ببندید.</li>' +

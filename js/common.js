@@ -69,6 +69,10 @@
     return Object.keys(m).map(function (k) { return { name: k, count: m[k] }; }).sort(function (a, b) { return b.count - a.count; });
   };
   FP.accent = function (p) { return /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(p && p.accent || '') ? p.accent : '#7c5cff'; };
+  FP.guideUrl = function (p) {
+    if (!p || !Array.isArray(p.install_steps_fa) || !p.install_steps_fa.length) return null;
+    return 'guides/' + encodeURIComponent(p.id) + '.html';
+  };
 
   /* ---------- Icons ---------- */
   var I = {
@@ -105,7 +109,13 @@
     var coverSrc = (typeof p.cover === 'string' && /^assets\//.test(p.cover)) ? p.cover
       : (p.screenshots && p.screenshots.length && !opts.svg ? p.screenshots[0] : null);
     if (coverSrc) {
-      return '<div class="cover cover-img"><img src="' + FP.esc(coverSrc) + '" alt="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"></div>';
+      var pos = (typeof p.cover_position === 'string' && /^[a-z%0-9 .+-]+$/i.test(p.cover_position)) ? p.cover_position : '';
+      var posAttr = pos ? ' style="object-position:' + FP.esc(pos) + '"' : '';
+      var thumb = coverSrc.replace(/(\.[a-z0-9]+)$/i, '-640$1');
+      var srcset = ' srcset="' + FP.esc(thumb) + ' 640w, ' + FP.esc(coverSrc) + ' 1280w"';
+      var sizes = ' sizes="' + FP.esc(opts.sizes || '(max-width:720px) 100vw, 360px') + '"';
+      var prio = opts.eager ? ' fetchpriority="high"' : '';
+      return '<div class="cover cover-img"><img src="' + FP.esc(coverSrc) + '"' + srcset + sizes + ' alt="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"' + prio + posAttr + '></div>';
     }
     /* fallback for a product without screenshots: plain accent gradient + English title */
     return '<div class="cover cover-fallback" role="img" aria-label="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" style="--glow:' + FP.accent(p) + '">' + FP.en(p.title_en || p.title_fa) + '</div>';
@@ -247,7 +257,11 @@
     var footer = '<footer class="site-footer"><div class="container"><div class="footer-grid">' +
       '<div><a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true"><picture><source srcset="assets/brand/emblem3d-88.webp 1x, assets/brand/emblem3d-176.webp 2x" type="image/webp"><img src="assets/brand/emblem3d-88.png" srcset="assets/brand/emblem3d-88.png 1x, assets/brand/emblem3d-176.png 2x" width="44" height="44" alt="" decoding="async" draggable="false"></picture></span><span class="logo-name">پرشیاپلی</span></a><p>فارسی‌ساز برای بازی‌های کامپیوتر؛ زیرنویس و منوی فارسی با فونت خوانا و نصب ساده. این نسخه، نسخه‌ی آزمایشی (بتا) سایت است.</p></div>' +
       '<div><h4>دسترسی سریع</h4><ul><li><a href="index.html">خانه</a></li><li><a href="catalog.html">همه‌ی فارسی‌سازها</a></li><li><a href="catalog.html?free=1">فارسی‌سازهای رایگان</a></li></ul></div>' +
-      '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی نصب</a></li><li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li></ul></div>' +
+      '<div><h4>راهنما</h4><ul><li><a href="index.html#how">نحوه‌ی نصب</a></li>' +
+      products.filter(function (p) { return FP.guideUrl(p); }).map(function (p) {
+        return '<li><a href="' + FP.guideUrl(p) + '">آموزش نصب ' + FP.esc(p.title_en || p.title_fa) + '</a></li>';
+      }).join('') +
+      '<li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li></ul></div>' +
       '<div id="footer-contact"><h4>ارتباط با ما</h4><ul><li>راه‌های ارتباطی به‌زودی اضافه می‌شوند.</li></ul></div>' +
       '</div><div class="footer-bottom"><span>© ۱۴۰۵ پرشیاپلی</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.2</bdi></span></div></div></footer>';
     var drawer = '<div class="overlay" id="overlay"></div>' +
