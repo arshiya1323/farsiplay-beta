@@ -7,8 +7,14 @@
   var root = FP.$('#productRoot');
 
   if (!p) {
-    root.innerHTML = '<div class="empty" style="margin:40px 0">' + I.search + '<h1 style="font-size:1.4rem">محصول پیدا نشد</h1><p>ممکن است لینک اشتباه باشد.</p><a class="btn btn-primary" href="catalog.html">بازگشت به فروشگاه</a></div>';
-    FP.$('#crumbTitle').textContent = 'یافت نشد';
+    document.title = 'این فارسی‌ساز فعلاً در دسترس نیست | پرشیاپلی (بتا)';
+    root.innerHTML = '<div class="empty empty-soon" style="margin:40px 0">' + I.info +
+      '<h1 style="font-size:1.4rem">این فارسی‌ساز فعلاً در دسترس نیست</h1>' +
+      '<p>ممکن است موقتاً برداشته شده باشد یا لینک قدیمی باشد. فارسی‌سازهای جدید به‌زودی برمی‌گردند.</p>' +
+      '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px">' +
+      '<a class="btn btn-primary" href="catalog.html">رفتن به فروشگاه</a>' +
+      '<a class="btn btn-ghost" href="index.html">صفحه‌ی اصلی</a></div></div>';
+    FP.$('#crumbTitle').textContent = 'در دسترس نیست';
     FP.$('#relSection').hidden = true;
     return;
   }

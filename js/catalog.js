@@ -59,8 +59,14 @@
     var list = filtered();
     FP.$('#resultCount').innerHTML = FP.fa(list.length) + ' فارسی‌ساز ' + (state.free ? 'رایگان ' : '') + 'پیدا شد' + (state.genre ? ' در سبک «' + FP.esc(state.genre) + '»' : '') + (state.q ? ' برای «<bdi>' + FP.esc(state.q) + '</bdi>»' : '');
     FP.$('#resetBtn').hidden = !(state.q || state.genre || state.free || state.sort !== 'new');
-    var empty = '<div class="empty" style="grid-column:1/-1">' + FP.icon.search + '<p>چیزی پیدا نشد. عبارت دیگری را امتحان کن یا فیلترها را پاک کن.</p></div>';
-    FP.renderGrid(grid, list, { sk: Math.max(4, Math.min(list.length, 8)), delay: animate ? 260 : 500, empty: empty });
+    var emptyMsg = P.length === 0
+      ? '<div class="empty empty-soon" style="grid-column:1/-1">' + FP.icon.game + '<h3>فارسی‌سازهای جدید به‌زودی</h3><p>کاتالوگ فعلاً خالی است. به‌محض آماده‌شدن فارسی‌سازها، همین‌جا می‌بینی.</p><a class="btn btn-ghost" href="about.html#contact">پیشنهاد بازی</a></div>'
+      : '<div class="empty" style="grid-column:1/-1">' + FP.icon.search + '<p>چیزی پیدا نشد. عبارت دیگری را امتحان کن یا فیلترها را پاک کن.</p></div>';
+    if (P.length === 0) {
+      FP.$('#resultCount').innerHTML = 'فعلاً فارسی‌سازی در فروشگاه نیست';
+      FP.$('#resetBtn').hidden = true;
+    }
+    FP.renderGrid(grid, list, { sk: Math.max(4, Math.min(list.length || 4, 8)), delay: animate ? 260 : 500, empty: emptyMsg });
     syncUrl();
   }
 
