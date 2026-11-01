@@ -689,3 +689,15 @@ html[data-theme="light"] .logo-name::after{background:linear-gradient(90deg,#b77
   .guide-layout{grid-template-columns:1fr}
   .guide-side{position:static}
 }
+
+/* ----- Telegram support box ----- */
+.support-box{margin-top:18px;padding:18px 20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm,none)}
+.support-box-head{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+.support-box-head svg{width:22px;height:22px;color:#2AABEE;flex-shrink:0}
+.support-box-head h2{margin:0;font-size:1.1rem;font-weight:900}
+.support-box > p{margin:0 0 12px;color:var(--muted);line-height:1.85}
+.support-menu{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.support-menu li{padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--primary) 14%,transparent);border:1px solid var(--border);font-size:.88rem;font-weight:700}
+.support-box .btn{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.support-foot{margin:12px 0 0;font-size:.85rem;color:var(--muted)}
+.tab-panel .support-box{margin-top:16px}

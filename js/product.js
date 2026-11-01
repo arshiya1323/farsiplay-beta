@@ -110,17 +110,19 @@
     action = '<div class="actions-row">' + action + guideCta + '</div>';
   }
 
+  var supportNearGuide = FP.tgSupportBox({ id: 'tgSupportProduct', reveal: false });
   var guide = Array.isArray(p.install_steps_fa) && p.install_steps_fa.length
     ? '<ol class="guide">' + p.install_steps_fa.map(function (st) { return '<li>' + FP.autoLtr(st) + '</li>'; }).join('') + '</ol>' +
       (p.game_version_fa ? '<div class="note">' + FP.autoLtr(p.game_version_fa) + '</div>' : '') +
-      (guideHref ? '<p class="guide-more"><a class="link-more" href="' + FP.esc(guideHref) + '">صفحه‌ی کامل آموزش نصب <span aria-hidden="true">←</span></a></p>' : '')
+      (guideHref ? '<p class="guide-more"><a class="link-more" href="' + FP.esc(guideHref) + '">صفحه‌ی کامل آموزش نصب <span aria-hidden="true">←</span></a></p>' : '') +
+      supportNearGuide
     : '<ol class="guide">' +
       '<li>فایل فارسی‌ساز را از بخش «دانلودهای من» دریافت و از حالت فشرده خارج کنید.</li>' +
       '<li>بازی و لانچر <bdi dir="ltr">' + FP.esc(p.platform) + '</bdi> را کامل ببندید.</li>' +
       '<li>فایل <code class="path">Setup.exe</code> را اجرا کنید و پوشه‌ی نصب بازی را انتخاب کنید؛ مثلاً <code class="path">C:\\Games\\' + FP.esc(p.title_en) + '</code></li>' +
       '<li>روی «نصب» بزنید. نصب‌کننده خودکار از فایل‌های اصلی نسخه‌ی پشتیبان می‌گیرد.</li>' +
       '<li>بازی را اجرا کنید؛ متن‌ها و منوها فارسی هستند. برای حذف، دوباره نصب‌کننده را اجرا و «بازگردانی» را انتخاب کنید.</li>' +
-      '</ol><div class="note">فارسی‌ساز با نسخه‌ی <bdi dir="ltr">' + FP.esc(p.version) + '</bdi> هماهنگ است. اگر بازی‌تان نسخه‌ی دیگری دارد، پیش از خرید با پشتیبانی هماهنگ کنید.</div>';
+      '</ol><div class="note">فارسی‌ساز با نسخه‌ی <bdi dir="ltr">' + FP.esc(p.version) + '</bdi> هماهنگ است. اگر بازی‌تان نسخه‌ی دیگری دارد، پیش از خرید با پشتیبانی هماهنگ کنید.</div>' + supportNearGuide;
 
   var credits = p.credits_fa ? '<section class="credits-box" aria-labelledby="creditsTitle"><h2 id="creditsTitle">' + I.heart + 'اعتبار و سپاس</h2><ul>' +
     String(p.credits_fa).split('؛').map(function (c) { return c.trim(); }).filter(Boolean).map(function (c) { return '<li>' + FP.autoLtr(c, p.credits_links) + '</li>'; }).join('') +

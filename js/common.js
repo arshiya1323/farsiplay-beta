@@ -73,6 +73,19 @@
     if (!p || !Array.isArray(p.install_steps_fa) || !p.install_steps_fa.length) return null;
     return 'guides/' + encodeURIComponent(p.id) + '.html';
   };
+  FP.TG_SUPPORT_URL = 'https://t.me/persiaplay_support_bot';
+  FP.tgSupportBox = function (opts) {
+    opts = opts || {};
+    var id = opts.id || 'tgSupportTitle';
+    return '<aside class="support-box' + (opts.reveal === false ? '' : ' reveal') + '" aria-labelledby="' + id + '">' +
+      '<div class="support-box-head">' + I.telegram + '<h2 id="' + id + '">پشتیبانی تلگرام</h2></div>' +
+      '<p>سوال، نظر یا درخواست فارسی‌ساز داری؟ ربات پشتیبانی پرشیاپلی آماده‌ست کمکت کنه.</p>' +
+      '<ul class="support-menu" aria-label="منوی ربات">' +
+      '<li>ثبت نظر</li><li>ثبت درخواست</li><li>راهنمای نصب</li><li>سوالات متداول</li><li>ارتباط با پشتیبانی</li>' +
+      '</ul>' +
+      '<a class="btn btn-primary" href="' + FP.TG_SUPPORT_URL + '" target="_blank" rel="noopener">شروع گفتگو با ربات <bdi class="en" dir="ltr">@persiaplay_support_bot</bdi></a>' +
+      '</aside>';
+  };
 
   /* ---------- Icons ---------- */
   var I = {
@@ -99,7 +112,8 @@
     chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
     game: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>',
     heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
-    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'
+    up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
+    telegram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></svg>'
   };
   FP.icon = I;
 
@@ -262,7 +276,7 @@
         return '<li><a href="' + FP.guideUrl(p) + '">آموزش نصب ' + FP.esc(p.title_en || p.title_fa) + '</a></li>';
       }).join('') +
       '<li><a href="index.html#faq">سوالات متداول</a></li><li><a href="about.html">درباره ما</a></li></ul></div>' +
-      '<div id="footer-contact"><h4>ارتباط با ما</h4><ul><li>راه‌های ارتباطی به‌زودی اضافه می‌شوند.</li></ul></div>' +
+      '<div id="footer-contact"><h4>ارتباط با ما</h4><ul><li><a href="https://t.me/persiaplay_support_bot" target="_blank" rel="noopener">پشتیبانی تلگرام</a> <bdi class="en" dir="ltr">@persiaplay_support_bot</bdi></li></ul></div>' +
       '</div><div class="footer-bottom"><span>© ۱۴۰۵ پرشیاپلی</span><span>نسخه‌ی بتا <bdi dir="ltr">v0.2</bdi></span></div></div></footer>';
     var drawer = '<div class="overlay" id="overlay"></div>' +
       '<aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true" inert>' +
