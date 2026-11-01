@@ -428,5 +428,22 @@
   FP.updateCartUI();
   document.addEventListener('DOMContentLoaded', function () { FP.enhance(document); });
   if (document.readyState !== 'loading') FP.enhance(document);
+
+  // GA4: file_download for any free-download link (product + guides)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-download]');
+    if (!a) return;
+    var slug = a.getAttribute('data-download') || '';
+    if (!slug) return;
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'file_download', {
+          game: slug,
+          link_url: a.href,
+          file_name: (a.getAttribute('href') || '').split('/').pop() || undefined
+        });
+      }
+    } catch (err) { }
+  });
 })();
 

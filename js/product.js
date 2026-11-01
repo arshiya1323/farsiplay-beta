@@ -98,7 +98,7 @@
       '<span class="now">' + FP.num(fin) + '<small>تومان</small></span></div>';
   var action;
   if (!free) action = '<button class="btn btn-primary btn-lg" type="button" data-add="' + FP.esc(p.id) + '" data-open-cart>' + I.cart + 'افزودن به سبد خرید</button>';
-  else if (p.download_url && /^(https:\/\/|assets\/|downloads\/)/.test(p.download_url)) action = '<a class="btn btn-primary btn-lg" href="' + FP.esc(p.download_url) + '" rel="noopener">' + I.download + 'دانلود رایگان</a>';
+  else if (p.download_url && /^(https:\/\/|assets\/|downloads\/)/.test(p.download_url)) action = '<a class="btn btn-primary btn-lg" href="' + FP.esc(p.download_url) + '" rel="noopener" data-download="' + FP.esc(p.id) + '">' + I.download + 'دانلود رایگان</a>';
   else action = '<button class="btn btn-primary btn-lg" type="button" disabled aria-describedby="soonNote">' + I.download + 'به‌زودی</button>';
   var soon = free && !p.download_url ? '<p class="soon-note" id="soonNote">' + I.info + '<span>نسخه‌ی نهایی در حال آماده‌سازیه و به‌زودی لینک دانلود رایگان همین‌جا قرار می‌گیره.</span></p>' : '';
   var guideHref = FP.guideUrl(p);
@@ -234,4 +234,5 @@
   }).sort(function (a, b) { return b.s - a.s; }).slice(0, 4).map(function (o) { return o.x; });
   if (rel.length) FP.renderGrid(FP.$('#relGrid'), rel, { sk: 4 }); else FP.$('#relSection').hidden = true;
   FP.enhance(document);
+
 })();
