@@ -26,9 +26,10 @@
   var badges = (free ? '<span class="tag free">رایگان</span>' : '') + (p.is_new ? '<span class="tag new">جدید</span>' : '') + (p.is_bestseller ? '<span class="tag best">پرفروش</span>' : '');
   var warnIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>';
 
+  var hasCover = (typeof p.cover === 'string' && /^assets\//.test(p.cover)) || shots.length;
   var media = shots.length
     ? '<button class="media-btn" type="button" data-shot="0" aria-label="نمایش بزرگ تصویر">' + FP.cover(p, { eager: true }) + '<span class="zoom-hint" aria-hidden="true">' + I.search + '</span></button>'
-    : FP.cover(p, { uid: 'main' });
+    : FP.cover(p, { eager: true, uid: 'main' });
 
   var warning = p.warning_fa ? '<div class="warn-box" role="alert">' + warnIcon + '<div><b>هشدار مهم</b><p>' + FP.autoLtr(p.warning_fa) + '</p></div></div>' : '';
 
@@ -80,7 +81,9 @@
     '</div>' +
     (p.game_version_fa ? '<p class="game-ver">' + I.check + '<span>' + FP.autoLtr(p.game_version_fa) + '</span></p>' : '') +
     warning +
-    '<div class="buy-box">' + priceBlock + '<div class="actions">' + action + '</div>' + soon + '</div>' +
+    '<div class="buy-box">' + priceBlock + '<div class="actions">' + action + '</div>' + soon +
+    (p.sha256 ? '<p class="hash-note" style="margin:10px 0 0;font-size:.82rem;color:var(--muted);word-break:break-all"><span>SHA-256:</span> <code class="path" dir="ltr">' + FP.esc(p.sha256) + '</code></p>' : '') +
+    '</div>' +
     '<div class="tabs" id="tabs"><div class="tab-list" role="tablist" aria-label="اطلاعات محصول">' +
     '<button class="tab-btn" role="tab" id="t-desc" aria-controls="p-desc" aria-selected="true">توضیحات</button>' +
     '<button class="tab-btn" role="tab" id="t-feat" aria-controls="p-feat" aria-selected="false" tabindex="-1">ویژگی‌ها</button>' +

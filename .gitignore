@@ -1,0 +1,2 @@
+# Hosted installer binaries (ship in deploy zip only)
+downloads/*.exe

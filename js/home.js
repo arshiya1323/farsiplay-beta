@@ -5,9 +5,13 @@
 
   // hero: real in-game screenshots of the featured (free) product, or a calm empty state
   var feat = P.filter(FP.isFree)[0] || P[0];
-  var hv = FP.$('#heroVisual'), shots = feat && feat.screenshots && feat.screenshots.length ? feat.screenshots.slice(0, 3) : [];
+  var hv = FP.$('#heroVisual');
+  var shots = feat && feat.screenshots && feat.screenshots.length ? feat.screenshots.slice(0, 3) : [];
+  if (!shots.length && feat && typeof feat.cover === 'string' && /^assets\//.test(feat.cover)) shots = [feat.cover];
   if (feat) {
-    FP.$('#heroLead').innerHTML = 'فارسی‌ساز <b>رایگان</b> ' + FP.en(feat.title_en) + ' آماده شد: زیرنویس، مأموریت‌ها و منوها به فارسی، با فونت خوانا و نصاب ساده.';
+    var eyebrow = document.querySelector('.hero .eyebrow');
+    if (eyebrow) eyebrow.innerHTML = '<span class="dot"></span>فارسی‌ساز رایگان ' + FP.en(feat.title_en) + ' آماده است';
+    FP.$('#heroLead').innerHTML = 'فارسی‌ساز <b>رایگان</b> ' + FP.en(feat.title_en) + (feat.version ? ' نسخه‌ی ' + FP.en(feat.version) : '') + ' آماده است: مخاطب‌ها و پیام‌های گوشی فارسی، فونت خوانا و نصاب ساده با امکان حذف کامل.';
     FP.$('#heroCta').innerHTML = '<a class="btn btn-primary btn-lg" href="product.html?id=' + encodeURIComponent(feat.id) + '">مشاهده‌ی فارسی‌ساز <span aria-hidden="true">←</span></a>' +
       '<a class="btn btn-ghost btn-lg" href="#how">چطور نصب کنم؟</a>';
   } else {

@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "id": "cyberpunk-2077",
+    "title_fa": "سایبرپانک ۲۰۷۷",
+    "title_en": "Cyberpunk 2077",
+    "genre_fa": "نقش‌آفرینی، اکشن",
+    "platform": "PC",
+    "version": "1.0.6",
+    "size_mb": 11,
+    "is_free": true,
+    "download_url": "downloads/FarsiSaz_Cyberpunk2077.exe",
+    "sha256": "4e6b2a3566841562a498a3ee2e45af990282227c3273a206c33d02fd46e82fc0",
+    "price_toman": 0,
+    "discount_percent": 0,
+    "rating": null,
+    "is_new": true,
+    "is_bestseller": false,
+    "features_fa": [
+      "اسم مخاطب‌ها و پیام‌های گوشی به فارسی و درست نمایش داده می‌شن",
+      "کلمه‌های انگلیسی اضافه حذف شدن",
+      "فونت فارسی خوانا بر پایه‌ی Vazirmatn",
+      "نصاب یک‌فایله با دکمه‌ی «حذف فارسی‌ساز» برای برگرداندن زبان قبلی بازی",
+      "سازگار با نسخه‌ی ۲٫۳۱ و بسته‌ی Phantom Liberty"
+    ],
+    "description_fa": "فارسی‌ساز رایگان Cyberpunk 2077 نسخه‌ی ۱٫۰٫۶ برای بازی نسخه‌ی ۲٫۳۱ به‌همراه Phantom Liberty. اسم مخاطب‌ها و پیام‌های گوشی فارسی و درست نمایش داده می‌شن، کلمه‌های انگلیسی اضافه حذف شدن، و با دکمه‌ی «حذف فارسی‌ساز» داخل همان نصاب می‌تونی زبان قبلی بازی رو برگردونی. همه‌چیز داخل یک فایل نصاب (حدود ۱۱ مگابایت) است.",
+    "install_steps_fa": [
+      "بازی رو ببندید.",
+      "فایل FarsiSaz_Cyberpunk2077.exe رو دانلود و اجرا کنید.",
+      "پوشه‌ی نصب بازی رو انتخاب کنید.",
+      "دکمه‌ی نصب رو بزنید و صبر کنید تا کار تمام شود.",
+      "برای حذف فارسی‌ساز، دوباره همان نصاب را اجرا کنید و دکمه‌ی «حذف فارسی‌ساز» را بزنید تا زبان قبلی بازی برگردد."
+    ],
+    "game_version_fa": "تست‌شده روی Cyberpunk 2077 نسخه‌ی 2.31 به‌همراه Phantom Liberty",
+    "credits_fa": "فونت Vazirmatn (مجوز SIL Open Font License)",
+    "credits_links": {
+      "Vazirmatn": "https://github.com/rastikerdar/vazirmatn"
+    },
+    "warning_fa": "قبل از نصب از سیوهایتان پشتیبان بگیرید. فقط برای نسخه‌ی ۲٫۳۱ به‌همراه Phantom Liberty.",
+    "accent": "#FCEE0A",
+    "cover": "assets/shots/cyberpunk-2077/cover.webp",
+    "screenshots": []
+  }
+]

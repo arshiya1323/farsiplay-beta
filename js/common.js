@@ -102,8 +102,10 @@
   /* ---------- Cover ---------- */
   FP.cover = function (p, opts) {
     opts = opts || {};
-    if (p.screenshots && p.screenshots.length && !opts.svg) {
-      return '<div class="cover cover-img"><img src="' + FP.esc(p.screenshots[0]) + '" alt="' + FP.esc('تصویر فارسی‌شده‌ی ' + (p.title_fa || p.title_en)) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"></div>';
+    var coverSrc = (typeof p.cover === 'string' && /^assets\//.test(p.cover)) ? p.cover
+      : (p.screenshots && p.screenshots.length && !opts.svg ? p.screenshots[0] : null);
+    if (coverSrc) {
+      return '<div class="cover cover-img"><img src="' + FP.esc(coverSrc) + '" alt="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" loading="' + (opts.eager ? 'eager' : 'lazy') + '" decoding="async" width="1280" height="720"></div>';
     }
     /* fallback for a product without screenshots: plain accent gradient + English title */
     return '<div class="cover cover-fallback" role="img" aria-label="' + FP.esc('کاور ' + (p.title_fa || p.title_en || '')) + '" style="--glow:' + FP.accent(p) + '">' + FP.en(p.title_en || p.title_fa) + '</div>';

@@ -1,0 +1,12 @@
+# Force download for installer binaries in this folder
+<IfModule mod_headers.c>
+  <FilesMatch "\.exe$">
+    Header set Content-Type "application/octet-stream"
+    Header set Content-Disposition "attachment"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_mime.c>
+  <FilesMatch "\.exe$">
+    ForceType application/octet-stream
+  </FilesMatch>
+</IfModule>
