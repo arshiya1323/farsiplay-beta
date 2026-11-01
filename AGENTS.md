@@ -9,7 +9,16 @@ PersiaPlay is a **static** HTML/CSS/JS site (no backend). Catalog lives in `data
 
 **Hard rules:** never publish Dragon's Dogma 2; GTA V is parked until Hiva says otherwise; never mention AI translation; keep third-party credits (OpenRPF by Transmet, rage-cli, Vazirmatn); no real payments; never commit installer `.exe` files (use GitHub Releases / host `downloads/`); never publish a translation file without Hiva's explicit OK; keep `google-site-verification` meta `Sui3EK5Vwn7CAXnR7Q1fPNw37PzCmAkJ4VBtu1JUGf4` on `index.html`; keep GA4 `G-Y1VWLSXRJV` on every page; keep Telegram support `https://t.me/persiaplay_support_bot`. **Always show a local preview and get Hiva's OK before upload.** Verify live URLs after deploy. Never touch the `gh-pages` branch (redirects only). Deploy via `D:\Builder-Projects\PersiaPlay-Deploy\deploy.ps1` (FTP home = `public_html`) or cPanel File Manager; preserve host `.htaccess` php block, `.user.ini`, `php.ini`.
 
+**Working copy on Hiva's PC:** `D:\Builder-Projects\PersiaPlay-Site-Latest` (full source with `tools/`, guides, GA4, Telegram). The older folder `D:\Builder-Projects\FarsiPlay-Site` is **stale** — do not use it as the live working tree.
+
 ---
+
+## کپی کاری روی ویندوز هیوا
+
+- **پوشه‌ی به‌روز (کار روی این):** `D:\Builder-Projects\PersiaPlay-Site-Latest`
+  — سورس کامل با `tools/`، راهنماها، GA4 و لینک تلگرام.
+- **پوشه‌ی قدیمی (کهنه):** `D:\Builder-Projects\FarsiPlay-Site`
+  — مال اکتبر ۲۰۲۶ با کاتالوگ نمونه؛ **به عنوان سورس کار استفاده نکن** و پاکش نکن مگر هیوا بگوید.
 
 ## این فایل چیه؟
 
@@ -26,7 +35,7 @@ PersiaPlay is a **static** HTML/CSS/JS site (no backend). Catalog lives in `data
 سایت استاتیکه (HTML / CSS / JS). بک‌اند نداره.
 
 ```
-FarsiPlay-Site/          (یا farsisaz-site / کپی publish)
+PersiaPlay-Site-Latest/  (کپی کاری ویندوز؛ یا farsisaz-site روی باکس)
 ├── index.html           خانه + meta تأیید گوگل
 ├── catalog.html         فروشگاه
 ├── product.html         صفحه‌ی محصول (?id=...)
@@ -217,7 +226,7 @@ FarsiPlay-Site/          (یا farsisaz-site / کپی publish)
 5. **بهینه‌سازی عملکرد و تصویر:** کاورهای سبک webp + `-640`؛ حواست به حجم قدیمی‌ها باشد؛ `Cache-Control` در `.htaccess` هست.
 6. **FAQ و دادهٔ ساخت‌یافته‌ی بیشتر** روی خانه/محصول (guideها الان HowTo + Breadcrumb دارند).
 7. **دسترسی‌پذیری:** کنتراست، فوکوس کیبورد، `prefers-reduced-motion` (تا حدی در `common.js` هست — قابل گسترش).
-8. **هم‌تراز کردن کپی ویندوز** با `main`/publish اگر پوشه‌ی محلی قدیمی است (نمونه/کاتالوگ کهنه را با زنده‌ی سایت اشتباه نگیر).
+8. روی ویندوز فقط از `PersiaPlay-Site-Latest` کار کن؛ `FarsiPlay-Site` کهنه است.
 
 ---
 
