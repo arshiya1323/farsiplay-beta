@@ -5,7 +5,7 @@
 
 ## English summary (read this first)
 
-PersiaPlay is a **static** HTML/CSS/JS site (no backend). Catalog lives in `data/products.json`. After edits run `python tools/build-data.py` to regenerate `data/products.js`, `sitemap.xml`, and `guides/*.html`. Asset cache-buster is currently `?v=20261102c` (bump in static HTML **and** `ASSET_V` in `tools/build-data.py`).
+PersiaPlay is a **static** HTML/CSS/JS site (no backend). Catalog lives in `data/products.json`. After edits run `python tools/build-data.py` to regenerate `data/products.js`, `sitemap.xml`, and `guides/*.html`. Asset cache-buster is currently `?v=20261106a` (bump in static HTML **and** `ASSET_V` in `tools/build-data.py`).
 
 **Hard rules:** never publish Dragon's Dogma 2; GTA V is parked until Hiva says otherwise; never mention AI translation; keep third-party credits (OpenRPF by Transmet, rage-cli, Vazirmatn); no real payments; never commit installer `.exe` files (use GitHub Releases / host `downloads/`); never publish a translation file without Hiva's explicit OK; keep `google-site-verification` meta `Sui3EK5Vwn7CAXnR7Q1fPNw37PzCmAkJ4VBtu1JUGf4` on `index.html`; keep GA4 `G-Y1VWLSXRJV` on every page; keep Telegram support `https://t.me/persiaplay_support_bot`. **Always show a local preview and get Hiva's OK before upload.** Verify live URLs after deploy. Never touch the `gh-pages` branch (redirects only). Deploy via `D:\Builder-Projects\PersiaPlay-Deploy\deploy.ps1` (FTP home = `public_html`) or cPanel File Manager; preserve host `.htaccess` php block, `.user.ini`, `php.ini`.
 
@@ -147,10 +147,10 @@ PersiaPlay-Site-Latest/  (کپی کاری ویندوز؛ یا farsisaz-site رو
 
 ### بیلد و ورژن دارایی
 
-- `tools/build-data.py` ثابت `ASSET_V` دارد (الان `"20261102c"`).
+- `tools/build-data.py` ثابت `ASSET_V` دارد (الان `"20261106a"`).
 - صفحات استاتیک (`index.html`, `catalog.html`, `product.html`, `about.html`, `checkout.html`) هم `?v=...` هاردکد دارند.
 - **هر دو را با هم عوض کن**، بعد `python tools/build-data.py` تا guideها هم هم‌ورژن شوند.
-- الگو: تاریخ فشرده + حرف (`20261102c` → تغییر بعدی مثلاً `20261103a`).
+- الگو: تاریخ فشرده + حرف (`20261106a` → تغییر بعدی مثلاً `20261103a`).
 
 شناسه‌های بلاک‌شده در بیلد (حتی اگر در JSON باشند guide/sitemap نمی‌گیرند): هر چیزی با `gta` یا `dogma`، به‌علاوه‌ی لیست صریح در `BLOCKED_IDS`.
 

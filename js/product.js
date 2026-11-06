@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var FP = window.FP, I = FP.icon;
-  var id = new URLSearchParams(location.search).get('id');
+  var id = new URLSearchParams(location.search).get('id') || document.body.getAttribute('data-product-id');
   var p = FP.byId(id) || null;
   var root = FP.$('#productRoot');
 

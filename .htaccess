@@ -3,6 +3,11 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://persiaplay.ir%{REQUEST_URI} [L,R=301]
 
+# SEO: serve the prerendered static copy for product.html?id=<id> (URL unchanged)
+RewriteCond %{QUERY_STRING} (?:^|&)id=([a-z0-9-]+)(?:&|$)
+RewriteCond %{DOCUMENT_ROOT}/product-%1.html -f
+RewriteRule ^product\.html$ product-%1.html [L]
+
 # Serve installer binaries under /downloads/ as attachments
 <IfModule mod_headers.c>
   SetEnvIf Request_URI "^/downloads/.*\.exe$" serve_exe_attachment
